@@ -1,0 +1,6 @@
+# Mac ignores
+.DS_Store
+.AppleDouble
+.LSOverride
+# Key files
+.key
