@@ -2,13 +2,16 @@ import React, { MouseEvent, useState, ChangeEvent } from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
 
 import Web3 from "web3";
+import web3Types from "web3/types";
 import axios from "axios";
 //@ts-ignore
 import detectEthereumProvider from "@metamask/detect-provider";
 
 import { abi } from "../contract.json";
+import JotForm from "./jotform";
 
-const CONTRACT_ADRESS = "0x39149AA315f97f88AAB7da5a8554411CEc022E3C";
+import { getFormField } from "../utils/formParser";
+const CONTRACT_ADRESS = "0xE875927e83A6A009521cBbA9abbc5bfA42B946B3";
 const ETHERSCAN_API_KEY = "3JGBFBRV39B3SMPSNJPB3TW6NG255R5BKI";
 const ETHERSCAN_API_URL =
   "https://api-rinkeby.etherscan.io/api?module=transaction&action=gettxreceiptstatus";
@@ -23,6 +26,7 @@ function EmailForm() {
     "Please connect to ethereum to see the message"
   );
   const [ethAccount, setEthAccount] = useState(null);
+  const [txStatus, setTxStatus] = useState(null);
   const enableEth = async () => {
     const provider = await detectEthereumProvider();
     if (provider) {
@@ -80,11 +84,8 @@ function EmailForm() {
     const url =
       ETHERSCAN_API_URL + "&txhash=" + txHash + "&apikey=" + ETHERSCAN_API_KEY;
     const response = await axios.get(url);
-    console.log(
-      response.data.status === 1
-        ? "Transaction confirmed"
-        : "Transaction failed"
-    );
+    const newTxStatus: any = response.data.status ? "verified" : "pending";
+    setTxStatus(newTxStatus);
   };
   const submitForm = async (e: MouseEvent) => {
     e.preventDefault();
@@ -94,7 +95,6 @@ function EmailForm() {
 
   const sendMessage = async () => {
     // TODO: call metamask;
-
     contract.options.from = ethAccount;
     contract.methods.setMessage(message).send(
       {
@@ -111,10 +111,16 @@ function EmailForm() {
 
   return (
     <Container>
+      <JotForm message={"This is jotform"} />
       <Row>
         <Col xs={6}>
           <div className="messageDiv">
             <p>{ethMessage}</p>
+          </div>
+          <div className="transaction">
+            {txStatus && txStatus === "verified"
+              ? "Transaction verified"
+              : "Transaction pending"}
           </div>
           <Button variant="primary" type="button" onClick={enableEth}>
             Connect to Ethereum

@@ -1,20 +1,13 @@
-pragma solidity >=0.4.0 <0.7.0;
+pragma solidity ^0.4.17;
 
-contract SimpleStorage {
-    uint storedData;
-    uint storeD;
-    constructor(uint x) public {
-        storedData = x;
-        storeD=1500;
+contract Inbox {
+    string public message;
+    
+    function Inbox(string initialMessage) public {
+        message = initialMessage;
     }
-    function set(uint x) public {
-        storedData = x;
-    }
-
-    function get() public view returns (uint) {
-        return storedData;
-    }
-    function getD() public view returns (uint) {
-        return storeD;
+    function setMessage(string newMessage) public returns (string) {
+        message = newMessage;
+        return message;
     }
 }
