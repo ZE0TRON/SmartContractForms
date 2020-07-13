@@ -8,7 +8,6 @@ import axios from "axios";
 import detectEthereumProvider from "@metamask/detect-provider";
 
 import { abi } from "../contract.json";
-import JotForm from "./jotform";
 
 import { getFormField } from "../utils/formParser";
 const CONTRACT_ADRESS = "0xE875927e83A6A009521cBbA9abbc5bfA42B946B3";
@@ -111,7 +110,6 @@ function EmailForm() {
 
   return (
     <Container>
-      <JotForm message={"This is jotform"} />
       <Row>
         <Col xs={6}>
           <div className="messageDiv">
