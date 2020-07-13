@@ -10,6 +10,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import { abi } from "../contract.json";
 
 import { getFormField } from "../utils/formParser";
+import Eth from "../ethereum/eth";
 const CONTRACT_ADRESS = "0xE875927e83A6A009521cBbA9abbc5bfA42B946B3";
 const ETHERSCAN_API_KEY = "3JGBFBRV39B3SMPSNJPB3TW6NG255R5BKI";
 const ETHERSCAN_API_URL =
@@ -17,14 +18,12 @@ const ETHERSCAN_API_URL =
 
 let contract: any = null;
 let ethereum: any = null;
-let web3: Web3;
-
+let eth: Eth;
 function EmailForm() {
   const [message, setMessage] = useState("");
   const [ethMessage, setEthMessage] = useState(
     "Please connect to ethereum to see the message"
   );
-  const [ethAccount, setEthAccount] = useState(null);
   const [txStatus, setTxStatus] = useState(null);
   const enableEth = async () => {
     const provider = await detectEthereumProvider();
@@ -32,31 +31,24 @@ function EmailForm() {
       //@ts-ignore
       ethereum = window["ethereum"];
       await ethereum.enable();
-      console.log(provider);
-      web3 = new Web3(provider);
+      //console.log(provider);
+      eth = new Eth(provider);
       //@ts-ignore
-      if (typeof window.ethereum.request !== "undefined") {
-        const accounts = await ethereum.request({
-          method: "eth_requestAccounts"
-        });
-        const account = accounts[0];
-        setEthAccount(account);
-        getEthMessage();
-      }
-      //@ts-ignore
-      else if (typeof window.web3 !== "undefined") {
-        //@ts-ignore
-        const windowWeb3 = window["web3"];
-        web3.eth.getAccounts((error: any, result: any) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
-          console.log(result);
-          setEthAccount(result[0]);
-          getEthMessage();
-        });
-      }
+      //if (typeof window.ethereum.request !== "undefined") {
+      //const accounts = await ethereum.request({
+      //method: "eth_requestAccounts"
+      //});
+      //const account = accounts[0];
+      //eth.setAccountWithAddress(account);
+      //getEthMessage();
+      //}
+      ////@ts-ignore
+      //else if (typeof window.web3 !== "undefined") {
+      ////@ts-ignore
+      //const windowWeb3 = window["web3"];
+      //}
+      await eth.init();
+      await getEthMessage();
     } else {
       console.log("No ethereum provider found");
     }
@@ -64,9 +56,10 @@ function EmailForm() {
 
   const getEthMessage = async () => {
     let abiAny = abi as any;
-    contract = new web3.eth.Contract(abiAny, CONTRACT_ADRESS);
+    eth.setContract(CONTRACT_ADRESS, abiAny);
+    console.log(eth.getContractMethods());
     try {
-      let result = await contract.methods.message().call();
+      let result = await eth.callPassiveMethod("message");
       setEthMessage(result);
     } catch (error) {
       console.log(error);
@@ -94,18 +87,9 @@ function EmailForm() {
 
   const sendMessage = async () => {
     // TODO: call metamask;
-    contract.options.from = ethAccount;
-    contract.methods.setMessage(message).send(
-      {
-        gasPrices: web3.utils.toWei("4.1", "Gwei")
-      },
-      (error: any, result: any) => {
-        if (error) console.log(error);
-        console.log(result);
-        verifyTransaction(result);
-        getEthMessage();
-      }
-    );
+    const txHash = await eth.callMethod("setMessage", [message], null);
+    verifyTransaction(txHash);
+    getEthMessage();
   };
 
   return (
