@@ -61,6 +61,12 @@ export default class Eth {
     return methodNames;
   }
 
+  getMethodParams(methodName: string) {
+    const method = this.contract?.options.jsonInterface.filter(
+      method => method.name === methodName
+    )[0];
+    return method?.inputs?.map(input => input.name);
+  }
   async callPassiveMethod(methodName: string) {
     this.checkContract();
     console.log("getting message");
