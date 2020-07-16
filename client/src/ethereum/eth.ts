@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { provider } from "web3-core/types";
 import { Contract } from "web3-eth-contract/types";
-
+import { MethodParam } from "../utils/types";
 const DEFAULT_OPTIONS = {
   gasPrices: Web3.utils.toWei("4.1", "Gwei")
 };
@@ -65,7 +65,9 @@ export default class Eth {
     const method = this.contract?.options.jsonInterface.filter(
       method => method.name === methodName
     )[0];
-    return method?.inputs?.map(input => input.name);
+    return method?.inputs?.map(
+      input => ({ name: input.name, paramType: input.type } as MethodParam)
+    );
   }
   async callPassiveMethod(methodName: string) {
     this.checkContract();

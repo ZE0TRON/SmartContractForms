@@ -5,19 +5,21 @@ import Eth from "../ethereum/eth";
 import { connectToEth } from "../ethereum/metamask";
 import EnableEthButton from "./enableEthButton";
 import IntegrationTable from "./integrationTable";
-import { MatchingTuple } from "../utils/types";
+import { MatchingTuple, MethodParam } from "../utils/types";
 import FormInfo from "./formInfo";
 import ContractInfoForm from "./contractInfo";
 // TODO split this component to two different components
 function IntegrationPage() {
   const [fields, setFields] = useState(["Select Field"]);
-  const [methodParams, setMethodParams] = useState(["Select Param"]);
+  const [methodParams, setMethodParams] = useState([
+    { name: "Select Param", paramType: "string" } as MethodParam
+  ]);
   const [matchings, setMatchings] = useState(Array<MatchingTuple>());
   const [eth, setEth] = useState({} as Eth);
   const onMatchingsChange = (newMatchings: Array<MatchingTuple>) =>
     setMatchings(newMatchings);
 
-  const onMethodParamsUpdated = (newParams: Array<string>) =>
+  const onMethodParamsUpdated = (newParams: Array<MethodParam>) =>
     setMethodParams(newParams);
   const onFieldsUpdated = (newFields: Array<string>) => setFields(newFields);
   const enableEth = async () => {

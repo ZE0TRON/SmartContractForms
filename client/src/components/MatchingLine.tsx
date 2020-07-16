@@ -1,33 +1,38 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import { MatchingTuple } from "../utils/types";
+import { MatchingTuple, MethodParam } from "../utils/types";
 export default function MatchingLine(props: {
   fields: Array<string>;
-  params: Array<string>;
+  params: Array<MethodParam>;
   field: string;
-  param: string;
+  param: MethodParam;
   onLineChange: any;
   index: number;
 }) {
   const { fields, params, field, param, onLineChange, index } = props;
-  const onDropDownChange = (e: MouseEvent, fieldType: string) => {
-    const target = e.target as HTMLElement;
-    const newParam = target.innerText;
-    if (param !== newParam) {
-      onLineChange(fieldType, newParam, index);
+  const onParamChange = (ddIndex: number, fieldType: string) => {
+    const newParam = params[ddIndex];
+    if (param.name !== newParam.name) {
+      onLineChange("param", newParam, index);
     }
   };
 
+  const onFieldChange = (ddIndex: number) => {
+    const newField = fields[ddIndex];
+    if (newField !== field) {
+      onLineChange("param", newField, index);
+    }
+  };
   return (
     <tr>
       <td>{index}</td>
       <td>
         <DropdownButton variant="info" id="dropdown-basic-button" title={field}>
-          {fields.map(field => (
+          {fields.map((field, index: number) => (
             <Dropdown.Item
               key={field}
               onClick={e => {
-                onDropDownChange(e as MouseEvent, "field");
+                onFieldChange(index);
               }}
             >
               {field}
@@ -36,15 +41,19 @@ export default function MatchingLine(props: {
         </DropdownButton>
       </td>
       <td>
-        <DropdownButton variant="info" id="dropdown-basic-button" title={param}>
-          {params.map(param => (
+        <DropdownButton
+          variant="info"
+          id="dropdown-basic-button"
+          title={param.name}
+        >
+          {params.map((param, index: number) => (
             <Dropdown.Item
-              key={param}
+              key={param.name}
               onClick={e => {
-                onDropDownChange(e as MouseEvent, "param");
+                onParamChange(index, "param");
               }}
             >
-              {param}
+              {param.name}
             </Dropdown.Item>
           ))}
         </DropdownButton>

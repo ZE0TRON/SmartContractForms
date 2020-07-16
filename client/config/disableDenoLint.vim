@@ -1,0 +1,2 @@
+CocUninstall coc-deno
+
