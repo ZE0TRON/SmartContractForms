@@ -35,6 +35,13 @@ export const CREATE_FORM_TABLE_QUERY = `
     page text not null
   );
 `;
+
+// DROP QUERIES
+export const DROP_USERS_QUERY = `drop table if exists users;`;
+export const DROP_INTEGRATIONS_QUERY = `drop table if exists integrations;`;
+export const DROP_FORMS_QUERY = `drop table if exists forms;`;
+export const DROP_MATCHINGS_QUERY = `drop table if exists matchings;`;
+
 // SELECTION QUERIES
 export const GET_ALL_USERS_QUERY = `
   select * from users;
@@ -45,6 +52,7 @@ export const GET_ALL_FORMS_QUERY = `
 export const GET_ALL_INTEGRATIONS_QUERY = `
   select * from integrations;
 `;
+
 // QUERIES WITH PARAMETERS
 export const GET_USER_BY_EMAIL_QUERY = `
   select * from users where email = $1;
@@ -65,6 +73,8 @@ export const GET_MATCHINGS_OF_INTEGRATION = `
   select * from matchings where integration_id = $1;
 `;
 // INSERTION QUERIES
-//
+// Parameters : email,password
 export const CREATE_USER_QUERY = `
+  insert into users (email,password)
+  values ($1, $2);
 `;

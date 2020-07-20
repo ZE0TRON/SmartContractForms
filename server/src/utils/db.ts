@@ -22,7 +22,23 @@ export const connectToDB = async () => {
 
 export const getUserByEmail = async (email: string) => {
   const result = await client.query(queries.GET_USER_BY_EMAIL_QUERY, email);
-  console.log(result);
+  return result;
+};
+export const addUser = async (email: string, password: string) => {
+  const result = await client.query(queries.CREATE_USER_QUERY, email, password);
   return result;
 };
 export const disconnectFromDB = async () => await client.end();
+
+export async function clearDB() {
+  let result = await client.query(queries.DROP_USERS_QUERY);
+  result = await client.query(queries.DROP_INTEGRATIONS_QUERY);
+  result = await client.query(queries.DROP_MATCHINGS_QUERY);
+  result = await client.query(queries.DROP_FORMS_QUERY);
+}
+export async function initDB() {
+  let result = await client.query(queries.CREATE_USER_TABLE_QUERY);
+  result = await client.query(queries.CREATE_INTEGRATION_TABLE_QUERY);
+  result = await client.query(queries.CREATE_MATCHING_TABLE_QUERY);
+  result = await client.query(queries.CREATE_FORM_TABLE_QUERY);
+}
