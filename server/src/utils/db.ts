@@ -22,12 +22,27 @@ export const connectToDB = async () => {
 
 export const getUserByEmail = async (email: string) => {
   const result = await client.query(queries.GET_USER_BY_EMAIL_QUERY, email);
-  return result;
+  return result.rows;
 };
+
+export const getUserBySessionID = async (sessionID: string) => {
+  const result = await client.query(
+    queries.GET_USER_BY_SESSION_ID_QUERY,
+    sessionID
+  );
+  return result.rows;
+};
+
+export const getAllUsers = async () => {
+  const result = await client.query(queries.GET_ALL_USERS_QUERY);
+  return result.rows;
+};
+
 export const addUser = async (email: string, password: string) => {
   const result = await client.query(queries.CREATE_USER_QUERY, email, password);
   return result;
 };
+
 export const disconnectFromDB = async () => await client.end();
 
 export async function clearDB() {
@@ -36,6 +51,7 @@ export async function clearDB() {
   result = await client.query(queries.DROP_MATCHINGS_QUERY);
   result = await client.query(queries.DROP_FORMS_QUERY);
 }
+
 export async function initDB() {
   let result = await client.query(queries.CREATE_USER_TABLE_QUERY);
   result = await client.query(queries.CREATE_INTEGRATION_TABLE_QUERY);

@@ -11,13 +11,9 @@ import teardown from "./teardown.ts";
 Deno.test("Create User", async () => {
   await setup();
   await db.addUser("cmpbilge@gmail.com", "hash");
-  const results = await db.getUserByEmail("cmpbilge@gmail.com");
-  console.log(results);
-  const users: any = results.rows;
-  console.log("Users", users);
+  const users = await db.getUserByEmail("cmpbilge@gmail.com");
   assert(users && typeof users !== "undefined");
   assertNotEquals(users.length, 0);
   assertEquals(users[0][1], "cmpbilge@gmail.com");
-  console.log(users);
   await teardown();
 });
