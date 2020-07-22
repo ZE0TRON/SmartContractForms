@@ -1,9 +1,11 @@
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+
 import {
   getAllUsers,
   getUserByEmail,
   getUserBySessionID
 } from "../utils/db.ts";
+
 export default class Account {
   id: number;
   email: string;

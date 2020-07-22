@@ -78,3 +78,15 @@ export const CREATE_USER_QUERY = `
   insert into users (email,password)
   values ($1, $2);
 `;
+export const CREATE_INTEGRATION_QUERY = `
+  insert into integrations (user_id,contract_address,contract_abi,contract_method,form_url)
+  values ($1, $2, $3, $4, $5);
+`;
+export const CREATE_MATCHING_QUERY = `
+  insert into matchings (integration_id,form_field,contract_parameter)
+  values ($1, $2, $3);
+`;
+export const CREATE_FORM_QUERY = `
+  insert into forms (integration_id,user_id,page)
+  values ($1, $2, $3)
+`;

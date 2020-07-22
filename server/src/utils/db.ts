@@ -9,17 +9,7 @@ const DB_HOST = Deno.env.get("DB_HOST");
 const DB_PORT = parseInt(Deno.env.get("DB_PORT") || "5432");
 
 let client: Client;
-
-export const connectToDB = async () => {
-  client = new Client({
-    user: DB_USER,
-    database: DB_NAME,
-    hostname: DB_HOST,
-    port: DB_PORT
-  });
-  await client.connect();
-};
-
+// Account Tx's
 export const getUserByEmail = async (email: string) => {
   const result = await client.query(queries.GET_USER_BY_EMAIL_QUERY, email);
   return result.rows;
@@ -42,7 +32,35 @@ export const addUser = async (email: string, password: string) => {
   const result = await client.query(queries.CREATE_USER_QUERY, email, password);
   return result;
 };
+// Form Tx's
+export const addForm = async (
+  integration_id: number,
+  user_id: number,
+  page: string
+) => {
+  const result = await client.query(
+    queries.CREATE_FORM_QUERY,
+    integration_id,
+    user_id,
+    page
+  );
+  return result;
+};
 
+export const getFormsOfUser = async (user_id: number) => {
+  const result = await client.query(queries.GET_FORMS_OF_USER_QUERY, user_id);
+  return result.rows;
+};
+// Integration Tx's
+export const getIntegrationsOfForm = async (integration_id: number) => {
+  const result = await client.query(
+    queries.GET_INTEGRATIONS_OF_FORM_QUERY,
+    integration_id
+  );
+  return result.rows;
+};
+
+// Main DB Function
 export const disconnectFromDB = async () => await client.end();
 
 export async function clearDB() {
@@ -58,3 +76,13 @@ export async function initDB() {
   result = await client.query(queries.CREATE_MATCHING_TABLE_QUERY);
   result = await client.query(queries.CREATE_FORM_TABLE_QUERY);
 }
+
+export const connectToDB = async () => {
+  client = new Client({
+    user: DB_USER,
+    database: DB_NAME,
+    hostname: DB_HOST,
+    port: DB_PORT
+  });
+  await client.connect();
+};
