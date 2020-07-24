@@ -69,8 +69,11 @@ export const GET_FORMS_OF_USER_QUERY = `
 export const GET_INTEGRATIONS_OF_FORM_QUERY = `
   select * from integrations where form_id = $1;
 `;
-export const GET_MATCHINGS_OF_INTEGRATION = `
+export const GET_MATCHINGS_OF_INTEGRATION_QUERY = `
   select * from matchings where integration_id = $1;
+`;
+export const GET_INTEGRATIONS_BY_ID_QUERY = `
+  select * from integrations where integration_id = $1; 
 `;
 // INSERTION QUERIES
 // Parameters : email,password

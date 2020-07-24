@@ -2,10 +2,15 @@ import { Client } from "https://deno.land/x/postgres/mod.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
 import * as queries from "./queries.ts";
+import Integration from "../models/integration.ts";
+
+export interface InsertResult {}
 
 const DB_USER = Deno.env.get("DB_USER");
 const DB_NAME = Deno.env.get("DB_NAME");
 const DB_HOST = Deno.env.get("DB_HOST");
+const DB_PASSWORD = Deno.env.get("DB_PASSWORD");
+
 const DB_PORT = parseInt(Deno.env.get("DB_PORT") || "5432");
 
 let client: Client;
@@ -60,6 +65,26 @@ export const getIntegrationsOfForm = async (integration_id: number) => {
   return result.rows;
 };
 
+export const addIntegration = async (integration: Integration) => {
+  const result = await client.query(
+    queries.CREATE_INTEGRATION_QUERY,
+    integration.user_id,
+    integration.contract.address,
+    integration.contract.abi,
+    integration.contract.method,
+    integration.form_url
+  );
+  console.log(result);
+  return result.rows;
+};
+
+export const getIntegrationByID = async (integration_id: number) => {
+  const result = await client.query(
+    queries.GET_INTEGRATIONS_BY_ID_QUERY,
+    integration_id
+  );
+  return result.rows;
+};
 // Main DB Function
 export const disconnectFromDB = async () => await client.end();
 
@@ -82,7 +107,8 @@ export const connectToDB = async () => {
     user: DB_USER,
     database: DB_NAME,
     hostname: DB_HOST,
-    port: DB_PORT
+    port: DB_PORT,
+    password: DB_PASSWORD,
   });
   await client.connect();
 };
