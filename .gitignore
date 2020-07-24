@@ -4,3 +4,4 @@
 .LSOverride
 # Key files
 .key
+.env
