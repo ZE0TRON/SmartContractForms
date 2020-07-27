@@ -1,0 +1,479 @@
+<script
+  src="https://cdn.jotfor.ms/js/vendor/jquery-1.8.0.min.js?v=3.3.19292"
+  type="text/javascript"
+></script>
+<script
+  src="https://cdn.jotfor.ms/js/vendor/maskedinput.min.js?v=3.3.19292"
+  type="text/javascript"
+></script>
+<script
+  src="https://cdn.jotfor.ms/js/vendor/jquery.maskedinput.min.js?v=3.3.19292"
+  type="text/javascript"
+></script>
+<script
+  src="https://cdn.jotfor.ms/static/prototype.forms.js"
+  type="text/javascript"
+></script>
+<script
+  src="https://cdn.jotfor.ms/static/jotform.forms.js?3.3.19292"
+  type="text/javascript"
+></script>
+<script
+  src="https://js.jotform.com/vendor/postMessage.js?3.3.19292"
+  type="text/javascript"
+></script>
+<script
+  src="https://js.jotform.com/WidgetsServer.js?v=1595847540427"
+  type="text/javascript"
+></script>
+<script type="text/javascript">
+  JotForm.init(function () {
+    JotForm.setPhoneMaskingValidator("input_7_full", "(###) ###-####");
+    JotForm.newDefaultTheme = true;
+    JotForm.newPaymentUIForNewCreatedForms = true;
+    JotForm.newPaymentUI = true;
+    JotForm.alterTexts(undefined);
+    JotForm.clearFieldOnHide = "disable";
+    JotForm.submitError = "jumpToFirstError";
+    /*INIT-END*/
+  });
+
+  JotForm.prepareCalculationsOnTheFly([
+    null,
+    {
+      name: "iHave",
+      qid: "1",
+      text: "I have a package to picked up.",
+      type: "control_head",
+    },
+    { name: "submit2", qid: "2", text: "Submit", type: "control_button" },
+    null,
+    null,
+    {
+      name: "packageLocation",
+      qid: "5",
+      text: "Package Location",
+      type: "control_widget",
+    },
+    {
+      description: "",
+      name: "name",
+      qid: "6",
+      text: "Name",
+      type: "control_fullname",
+    },
+    {
+      description: "",
+      name: "phoneNumber",
+      qid: "7",
+      text: "Phone Number",
+      type: "control_phone",
+    },
+    {
+      description: "",
+      name: "pleaseVerify",
+      qid: "8",
+      text: "Please verify that you are human",
+      type: "control_captcha",
+    },
+  ]);
+  setTimeout(function () {
+    JotForm.paymentExtrasOnTheFly([
+      null,
+      {
+        name: "iHave",
+        qid: "1",
+        text: "I have a package to picked up.",
+        type: "control_head",
+      },
+      { name: "submit2", qid: "2", text: "Submit", type: "control_button" },
+      null,
+      null,
+      {
+        name: "packageLocation",
+        qid: "5",
+        text: "Package Location",
+        type: "control_widget",
+      },
+      {
+        description: "",
+        name: "name",
+        qid: "6",
+        text: "Name",
+        type: "control_fullname",
+      },
+      {
+        description: "",
+        name: "phoneNumber",
+        qid: "7",
+        text: "Phone Number",
+        type: "control_phone",
+      },
+      {
+        description: "",
+        name: "pleaseVerify",
+        qid: "8",
+        text: "Please verify that you are human",
+        type: "control_captcha",
+      },
+    ]);
+  }, 20);
+</script>
+<link
+  type="text/css"
+  media="print"
+  rel="stylesheet"
+  href="https://cdn.jotfor.ms/css/printForm.css?3.3.19292"
+/>
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://cdn.jotfor.ms/themes/CSS/5e6b428acc8c4e222d1beb91.css?themeRevisionID=5eb3b4ae85bd2e1e2966db96"
+/>
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://cdn.jotfor.ms/css/styles/payment/payment_styles.css?3.3.19292"
+/>
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://cdn.jotfor.ms/css/styles/payment/payment_feature.css?3.3.19292"
+/>
+<form
+  class="jotform-form"
+  action="https://submit.jotform.com/submit/201883215445050/"
+  method="post"
+  name="form_201883215445050"
+  id="201883215445050"
+  accept-charset="utf-8"
+  autocomplete="on"
+>
+  <input type="hidden" name="formID" value="201883215445050" />
+  <input type="hidden" id="JWTContainer" value="" />
+  <input type="hidden" id="cardinalOrderNumber" value="" />
+  <div role="main" class="form-all">
+    <ul class="form-section page-section">
+      <li id="cid_1" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group header-large">
+          <div class="header-text httal htvam">
+            <h1 id="header_1" class="form-header" data-component="header">
+              I have a package to picked up.
+            </h1>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_fullname" id="id_6">
+        <label
+          class="form-label form-label-top form-label-auto"
+          id="label_6"
+          for="first_6"
+        >
+          Name
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_6" class="form-input-wide jf-required" data-layout="full">
+          <div data-wrapper-react="true">
+            <span
+              class="orm-sub-label-container"
+              style="vertical-align: top;"
+              data-input-type="first"
+            >
+              <input
+                type="text"
+                id="first_6"
+                name="q6_name[first]"
+                class="form-textbox validate[required]"
+                size="10"
+                value=""
+                data-component="first"
+                aria-labelledby="label_6 sublabel_6_first"
+                required=""
+              />
+              <label
+                class="form-sub-label"
+                for="first_6"
+                id="sublabel_6_first"
+                style="min-height: 13px;"
+                aria-hidden="false"
+              >
+                First Name
+              </label>
+            </span>
+            <span
+              class="form-sub-label-container"
+              style="vertical-align: top;"
+              data-input-type="last"
+            >
+              <input
+                type="text"
+                id="last_6"
+                name="q6_name[last]"
+                class="form-textbox validate[required]"
+                size="15"
+                value=""
+                data-component="last"
+                aria-labelledby="label_6 sublabel_6_last"
+                required=""
+              />
+              <label
+                class="form-sub-label"
+                for="last_6"
+                id="sublabel_6_last"
+                style="min-height: 13px;"
+                aria-hidden="false"
+              >
+                Last Name
+              </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_phone" id="id_7">
+        <label
+          class="form-label form-label-top form-label-auto"
+          id="label_7"
+          for="input_7_full"
+        >
+          Phone Number
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_7" class="form-input-wide jf-required" data-layout="half">
+          <span class="form-sub-label-container" style="vertical-align: top;">
+            <input
+              type="tel"
+              id="input_7_full"
+              name="q7_phoneNumber[full]"
+              data-type="mask-number"
+              class="mask-phone-number form-textbox validate[required, Fill Mask]"
+              style="width: 310px;"
+              data-masked="true"
+              value=""
+              placeholder="(000) 000-0000"
+              data-component="phone"
+              aria-labelledby="label_7 sublabel_7_masked"
+              required=""
+            />
+            <label
+              class="form-sub-label"
+              for="input_7_full"
+              id="sublabel_7_masked"
+              style="min-height: 13px;"
+              aria-hidden="false"
+            >
+              Please enter a valid phone number.
+            </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_widget" id="id_5">
+        <label
+          class="form-label form-label-top form-label-auto"
+          id="label_5"
+          for="input_5"
+        >
+          Package Location
+        </label>
+        <div id="cid_5" class="form-input-wide" data-layout="full">
+          <div
+            data-widget-name="GPS Location"
+            style="width: 100%; text-align: Left; overflow-x: auto;"
+            data-component="widget-field"
+          >
+            <iframe
+              title="GPS Location"
+              frameBorder="0"
+              scrolling="no"
+              allowtransparency="true"
+              allow="geolocation; microphone; camera; autoplay; encrypted-media; fullscreen"
+              data-type="iframe"
+              class="custom-field-frame"
+              id="customFieldFrame_5"
+              src=""
+              style="
+                max-width: 400px;
+                border: none;
+                width: 100%;
+                height: 300px;
+              "
+              data-width="400"
+              data-height="300"
+            >
+            </iframe>
+            <div class="widget-inputs-wrapper">
+              <input
+                type="hidden"
+                id="input_5"
+                class="form-hidden form-widget"
+                name="q5_packageLocation"
+                value=""
+              />
+              <input
+                type="hidden"
+                id="widget_settings_5"
+                class="form-hidden form-widget-settings"
+                value="%5B%7B%22name%22%3A%22apiKey%22%2C%22value%22%3A%22AIzaSyC3ry3DT7n0kvZdeI6VXTw1TN3KzUwzwoA%22%7D%2C%7B%22name%22%3A%22showMinimap%22%2C%22value%22%3A%22Yes%22%7D%2C%7B%22name%22%3A%22hintText%22%2C%22value%22%3A%22Hint%3A%20You%20can%20drag%20the%20Marker%20to%20change%20your%20location%22%7D%2C%7B%22name%22%3A%22inputPlaceholder%22%2C%22value%22%3A%22Type%20Address%22%7D%2C%7B%22name%22%3A%22errorLocation%22%2C%22value%22%3A%22Location%20not%20Found!%22%7D%5D"
+                data-version="2"
+              />
+            </div>
+            <script type="text/javascript">
+              setTimeout(function () {
+                var _cFieldFrame = document.getElementById(
+                  "customFieldFrame_5"
+                );
+                if (_cFieldFrame) {
+                  _cFieldFrame.onload = function () {
+                    if (typeof widgetFrameLoaded !== "undefined") {
+                      widgetFrameLoaded(5, {
+                        formID: 201883215445050,
+                      });
+                    }
+                  };
+                  _cFieldFrame.src =
+                    "//widgets.jotform.io/gpsLocation/?qid=5&ref=" +
+                    encodeURIComponent(
+                      window.location.protocol + "//" + window.location.host
+                    ) +
+                    "" +
+                    "&injectCSS=" +
+                    encodeURIComponent(
+                      window.location.search.indexOf("ndt=1") > -1
+                    );
+                  _cFieldFrame.addClassName("custom-field-frame-rendered");
+                }
+              }, 0);
+            </script>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_captcha" id="id_8">
+        <label
+          class="form-label form-label-top form-label-auto"
+          id="label_8"
+          for="input_8"
+        >
+          Please verify that you are human
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_8" class="form-input-wide jf-required" data-layout="full">
+          <section data-wrapper-react="true">
+            <div
+              id="recaptcha_input_8"
+              data-component="recaptcha"
+              data-callback="recaptchaCallbackinput_8"
+              data-expired-callback="recaptchaExpiredCallbackinput_8"
+            ></div>
+            <input
+              type="hidden"
+              id="input_8"
+              class="hidden validate[required]"
+              name="recaptcha_visible"
+              required=""
+            />
+            <script
+              type="text/javascript"
+              src="https://www.google.com/recaptcha/api.js?render=explicit&amp;onload=recaptchaLoadedinput_8"
+            ></script>
+            <script type="text/javascript">
+              var recaptchaLoadedinput_8 = function () {
+                window.grecaptcha.render($("recaptcha_input_8"), {
+                  sitekey: "6LdU3CgUAAAAAB0nnFM3M3T0sy707slYYU51RroJ",
+                });
+                var grecaptchaBadge = document.querySelector(
+                  ".grecaptcha-badge"
+                );
+                if (grecaptchaBadge) {
+                  grecaptchaBadge.style.boxShadow = "gray 0px 0px 2px";
+                }
+              };
+
+              /**
+               * Called when the reCaptcha verifies the user is human
+               * For invisible reCaptcha;
+               *   Submit event is stopped after validations and recaptcha is executed.
+               *   If a challenge is not displayed, this will be called right after grecaptcha.execute()
+               *   If a challenge is displayed, this will be called when the challenge is solved successfully
+               *   Submit is triggered to actually submit the form since it is stopped before.
+               */
+              var recaptchaCallbackinput_8 = function () {
+                var isInvisibleReCaptcha = false;
+                var hiddenInput = $("input_8");
+                hiddenInput.setValue(1);
+                if (!isInvisibleReCaptcha) {
+                  if (hiddenInput.validateInput) {
+                    hiddenInput.validateInput();
+                  }
+                } else {
+                  triggerSubmit(hiddenInput.form);
+                }
+
+                function triggerSubmit(formElement) {
+                  var button = formElement.ownerDocument.createElement("input");
+                  button.style.display = "none";
+                  button.type = "submit";
+                  formElement.appendChild(button).click();
+                  formElement.removeChild(button);
+                }
+              };
+
+              // not really required for invisible recaptcha
+              var recaptchaExpiredCallbackinput_8 = function () {
+                var hiddenInput = $("input_8");
+                hiddenInput.writeAttribute("value", false);
+                if (hiddenInput.validateInput) {
+                  hiddenInput.validateInput();
+                }
+              };
+            </script>
+          </section>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_button" id="id_2">
+        <div id="cid_2" class="form-input-wide" data-layout="full">
+          <div
+            data-align="auto"
+            class="form-buttons-wrapper form-buttons-auto jsTest-button-wrapperField"
+          >
+            <button
+              id="input_2"
+              type="submit"
+              class="form-submit-button submit-button jf-form-buttons jsTest-submitField"
+              data-component="button"
+              data-content=""
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </li>
+      <li style="display: none;">
+        Should be Empty:
+        <input type="text" name="website" value="" />
+      </li>
+    </ul>
+  </div>
+  <script>
+    JotForm.showJotFormPowered = "0";
+  </script>
+  <script>
+    JotForm.poweredByText = "Powered by JotForm";
+  </script>
+  <input
+    type="hidden"
+    id="simple_spc"
+    name="simple_spc"
+    value="201883215445050"
+  />
+  <script type="text/javascript">
+    document.getElementById("si" + "mple" + "_spc").value =
+      "201883215445050-201883215445050";
+  </script>
+</form>
+<script src="https://cdn.jotfor.ms//js/vendor/smoothscroll.min.js?v=3.3.19292"></script>
+<script src="https://cdn.jotfor.ms//js/errorNavigation.js?v=3.3.19292"></script>

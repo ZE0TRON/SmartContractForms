@@ -1,8 +1,16 @@
-import { clearDB, initDB, connectToDB } from "../src/utils/db.ts";
+import { Client } from "https://deno.land/x/postgres/mod.ts";
 
+import { clearDB, initDB } from "../src/utils/db.ts";
+import * as DataQueries from "./data/dummyDataQueries.ts";
+
+const populateWithDummyData = async (client: Client) => {
+  await client.query(DataQueries.POPULATE_USERS_QUERY);
+  await client.query(DataQueries.POPULATE_FORMS_QUERY);
+  await client.query(DataQueries.POPULATE_INTEGRATIONS_QUERY);
+};
 // TODO modify this when test env set use test db
-export default async function setup() {
-  await connectToDB();
-  await clearDB();
-  await initDB();
+export default async function setup(db: Client) {
+  await clearDB(db);
+  await initDB(db);
+  await populateWithDummyData(db);
 }

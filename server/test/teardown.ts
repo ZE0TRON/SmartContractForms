@@ -1,7 +1,7 @@
-import { clearDB, disconnectFromDB } from "../src/utils/db.ts";
+import { Client } from "https://deno.land/x/postgres/mod.ts";
 
-// TODO modify this when test env set use test db
-export default async function teardown() {
-  await clearDB();
-  await disconnectFromDB();
+import { clearDB } from "../src/utils/db.ts";
+
+export default async function teardown(db: Client) {
+  await clearDB(db);
 }

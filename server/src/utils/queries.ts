@@ -4,7 +4,7 @@ export const CREATE_USER_TABLE_QUERY = `
   create table users (
   	user_id serial primary key,
     email varchar(30) unique not null,
-    password varchar(50) not null,
+    password varchar(100) not null,
     session_id varchar(70)
   );
 `;
@@ -12,10 +12,9 @@ export const CREATE_INTEGRATION_TABLE_QUERY = `
   create table integrations (
     integration_id serial primary key,
     user_id int not null,
-    contract_address varchar(42) unique not null,
-    contract_abi text  not null,
-    contract_method varchar(20)  not null,
-    form_url varchar(50) not null
+    contract_address varchar(42) not null,
+    contract_abi text not null,
+    contract_method varchar(20)  not null
   );
 `;
 export const CREATE_MATCHING_TABLE_QUERY = `
@@ -79,17 +78,21 @@ export const GET_INTEGRATIONS_BY_ID_QUERY = `
 // Parameters : email,password
 export const CREATE_USER_QUERY = `
   insert into users (email,password)
-  values ($1, $2);
+  values ($1, $2)
+  returning user_id;
 `;
 export const CREATE_INTEGRATION_QUERY = `
-  insert into integrations (user_id,contract_address,contract_abi,contract_method,form_url)
-  values ($1, $2, $3, $4, $5);
+  insert into integrations (user_id,contract_address,contract_abi,contract_method)
+  values ($1, $2, $3, $4)
+  returning integration_id;
 `;
 export const CREATE_MATCHING_QUERY = `
   insert into matchings (integration_id,form_field,contract_parameter)
-  values ($1, $2, $3);
+  values ($1, $2, $3)
+  returning matching_id;
 `;
 export const CREATE_FORM_QUERY = `
   insert into forms (integration_id,user_id,page)
   values ($1, $2, $3)
+  returning form_id;
 `;

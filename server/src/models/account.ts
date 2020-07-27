@@ -1,19 +1,25 @@
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+import { Client } from "https://deno.land/x/postgres/mod.ts";
 
 import {
   getAllUsers,
   getUserByEmail,
-  getUserBySessionID
+  getUserBySessionID,
 } from "../utils/db.ts";
 
 export default class Account {
-  id: number;
+  account_id: number;
   email: string;
   password: string;
-  sessionID: string;
+  sessionID: string | null;
 
-  constructor(id: number, email: string, password: string, sessionID: string) {
-    this.id = id;
+  constructor(
+    email: string,
+    password: string,
+    sessionID: string | null,
+    account_id: number = 0
+  ) {
+    this.account_id = account_id;
     this.email = email;
     this.password = Account.hashPassword(password);
     this.sessionID = sessionID;
@@ -29,23 +35,23 @@ export default class Account {
     return account;
   }
 
-  static async getAccounts(): Promise<Array<Account>> {
+  static async getAccounts(db: Client): Promise<Array<Account>> {
     // Not sure what to call it array of user field columns array
-    const accountCols = await getAllUsers();
-    const accounts = accountCols.map(accountCol =>
+    const accountCols = await getAllUsers(db);
+    const accounts = accountCols.map((accountCol) =>
       Account.fromSqlQuery(accountCol)
     );
     return accounts;
   }
 
-  static async getByEmail(email: string): Promise<Account> {
-    const accountCol = await getUserByEmail(email);
+  static async getByEmail(db: Client, email: string): Promise<Account> {
+    const accountCol = await getUserByEmail(db, email);
     const account = Account.fromSqlQuery(accountCol);
     return account;
   }
 
-  static async getBySessionID(sessionID: string): Promise<Account> {
-    const accountCol = await getUserBySessionID(sessionID);
+  static async getBySessionID(db: Client, sessionID: string): Promise<Account> {
+    const accountCol = await getUserBySessionID(db, sessionID);
     const account = Account.fromSqlQuery(accountCol);
     return account;
   }

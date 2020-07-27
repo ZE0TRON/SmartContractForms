@@ -15,8 +15,8 @@ class Contract {
 }
 
 export default class Integration {
+  integration_id: number;
   user_id: number;
-  form_url: string;
   contract: Contract;
 
   constructor(
@@ -24,7 +24,7 @@ export default class Integration {
     contract_address: string,
     contract_abi: string,
     contract_method: string,
-    form_url: string
+    integration_id: number = 0
   ) {
     this.contract = new Contract(
       contract_address,
@@ -32,6 +32,6 @@ export default class Integration {
       contract_method
     );
     this.user_id = user_id;
-    this.form_url = form_url;
+    this.integration_id = integration_id;
   }
 }
