@@ -1,10 +1,5 @@
 import { Rhum } from "../lib/rhum/mod.ts";
 import { Client } from "https://deno.land/x/postgres/mod.ts";
-import {
-  assert,
-  assertEquals,
-  assertNotEquals,
-} from "https://deno.land/std/testing/asserts.ts";
 
 import * as db from "../src/utils/db.ts";
 import setup from "./setup.ts";
@@ -12,9 +7,10 @@ import teardown from "./teardown.ts";
 import Integration from "../src/models/integration.ts";
 import Account from "../src/models/account.ts";
 import Form from "../src/models/form.ts";
+import Matching from "../src/models/matching.ts";
 import { abi, address } from "./data/contract.ts";
-import { url } from "./data/form.ts";
-// TODO setup with queries
+const { assert, assertEquals, assertNotEquals } = Rhum.asserts;
+
 Rhum.testPlan("utils/db.ts", () => {
   let client: Client;
   Rhum.beforeAll(async () => {
@@ -41,7 +37,6 @@ Rhum.testPlan("utils/db.ts", () => {
       const form = new Form(1, 6, "<html>");
       const formID = await db.addForm(client, form);
       const forms = await db.getFormsOfUser(client, 6);
-      console.log(forms[0]);
       assert(forms && typeof forms !== "undefined");
       assertNotEquals(forms.length, 0);
       assertEquals(forms[0][0], formID);
@@ -68,7 +63,16 @@ Rhum.testPlan("utils/db.ts", () => {
   });
 
   Rhum.testSuite("Matching TXs", () => {
-    Rhum.testCase("addMatching(),getMatchingByIntegrationID()", async () => {});
+    Rhum.testCase("addMatching(),getMatchingByIntegrationID()", async () => {
+      const matching = new Matching(1, "user_name", "userName");
+      const matchingID = await db.addMatching(client, matching);
+      const retrievedMatching = await db.getMatchingByID(client, matchingID);
+
+      assert(retrievedMatching && typeof retrievedMatching !== "undefined");
+      assertNotEquals(retrievedMatching.length, 0);
+      assertEquals(retrievedMatching[0][0], matchingID);
+      assertEquals(retrievedMatching[0][2], "user_name");
+    });
   });
 });
 

@@ -16,6 +16,32 @@ const ABIs = [...Array(INTEGRATION_COUNT).keys()].map((i) =>
   readFileStr(`${ABI_DIR}/abi${i + 1}.json`).replaceAll("'", "''")
 );
 
+const MATCHING_COUNT = 10;
+const FORM_FIELDS = [
+  "field1",
+  "field2",
+  "field3",
+  "field4",
+  "field5",
+  "field6",
+  "field7",
+  "field8",
+  "field9",
+  "field10",
+];
+const CONTRACT_PARAMETERS = [
+  "param1",
+  "param2",
+  "param3",
+  "param4",
+  "param5",
+  "param6",
+  "param7",
+  "param8",
+  "param9",
+  "param10",
+];
+
 const CONTRACT_ADDRESSES = [
   "0xE875927e83A6A009521cBbA9abbc5bfA42B946B3",
   "0xf875927e83A6A009521cBbA9abbc5bfA42B946B3",
@@ -40,20 +66,22 @@ export const POPULATE_USERS_QUERY = `
     ('abc4@example.com','hash4',null), 
     ('abc5@example.com','hash5','session5secret') ;
 `;
-// TODO change static form access to a iteration
 export const POPULATE_FORMS_QUERY = `
   insert into forms (user_id ,integration_id,page) 
   values (1,2,'${forms[0]}'), (2,1,'${forms[1]}'), (4,4,'${forms[2]}'), (2,3,'${forms[3]}'), (5,5,'${forms[4]}') ;
 `;
 
-export const POPULATE_INTEGRATIONS_QUERY =
-  `
+export const POPULATE_INTEGRATIONS_QUERY = `
   insert into integrations (user_id,contract_address,contract_abi,contract_method)
   values ${[...Array(INTEGRATION_COUNT).keys()].map(
     (i) =>
       `(${i + 1},'${CONTRACT_ADDRESSES[i]}','${ABIs[i]}','${
         CONTRACT_METHODS[i]
-      }')
-  `
-  )}
-`.slice(0, -1) + ";";
+      }') `
+  )};`;
+
+export const POPULATE_MATCHINGS_QUERY = `
+  insert into matchings (integration_id,form_field,contract_parameter)
+  values ${[...Array(MATCHING_COUNT).keys()].map(
+    (i) => `(${i + 1},'${FORM_FIELDS[i]}','${CONTRACT_PARAMETERS[i]}') `
+  )};`;

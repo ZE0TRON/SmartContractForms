@@ -74,6 +74,9 @@ export const GET_MATCHINGS_OF_INTEGRATION_QUERY = `
 export const GET_INTEGRATIONS_BY_ID_QUERY = `
   select * from integrations where integration_id = $1; 
 `;
+export const GET_MATCHINGS_BY_ID_QUERY = `
+  select * from matchings where matching_id = $1; 
+`;
 // INSERTION QUERIES
 // Parameters : email,password
 export const CREATE_USER_QUERY = `

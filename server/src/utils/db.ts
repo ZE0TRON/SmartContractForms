@@ -5,6 +5,7 @@ import * as queries from "./queries.ts";
 import Integration from "../models/integration.ts";
 import Account from "../models/account.ts";
 import Form from "../models/form.ts";
+import Matching from "../models/matching.ts";
 
 const DB_USER = Deno.env.get("DB_USER");
 const DB_NAME = Deno.env.get("DB_NAME");
@@ -88,6 +89,32 @@ export const getIntegrationByID = async (
     integration_id
   );
   return result.rows;
+};
+// Matching Tx's
+export const getMatchingByID = async (db: Client, matching_id: number) => {
+  const result = await db.query(queries.GET_MATCHINGS_BY_ID_QUERY, matching_id);
+  return result.rows;
+};
+
+export const getMatchingsOfIntegration = async (
+  db: Client,
+  integration_id: number
+) => {
+  const result = await db.query(
+    queries.GET_MATCHINGS_OF_INTEGRATION_QUERY,
+    integration_id
+  );
+  return result.rows;
+};
+
+export const addMatching = async (db: Client, matching: Matching) => {
+  const result = await db.query(
+    queries.CREATE_MATCHING_QUERY,
+    matching.integration_id,
+    matching.form_field,
+    matching.contract_parameter
+  );
+  return result.rows[0][0];
 };
 // Main DB Function
 export const disconnectFromDB = async (db: Client) => await db.end();

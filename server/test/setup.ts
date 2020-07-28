@@ -7,8 +7,8 @@ const populateWithDummyData = async (client: Client) => {
   await client.query(DataQueries.POPULATE_USERS_QUERY);
   await client.query(DataQueries.POPULATE_FORMS_QUERY);
   await client.query(DataQueries.POPULATE_INTEGRATIONS_QUERY);
+  await client.query(DataQueries.POPULATE_MATCHINGS_QUERY);
 };
-// TODO modify this when test env set use test db
 export default async function setup(db: Client) {
   await clearDB(db);
   await initDB(db);
