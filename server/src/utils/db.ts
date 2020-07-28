@@ -37,7 +37,8 @@ export const addUser = async (db: Client, user: Account) => {
   const result = await db.query(
     queries.CREATE_USER_QUERY,
     user.email,
-    user.password
+    user.password,
+    user.sessionID
   );
   return result.rows[0][0];
 };

@@ -80,8 +80,8 @@ export const GET_MATCHINGS_BY_ID_QUERY = `
 // INSERTION QUERIES
 // Parameters : email,password
 export const CREATE_USER_QUERY = `
-  insert into users (email,password)
-  values ($1, $2)
+  insert into users (email,password,session_id)
+  values ($1, $2, $3)
   returning user_id;
 `;
 export const CREATE_INTEGRATION_QUERY = `

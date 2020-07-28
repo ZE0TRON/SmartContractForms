@@ -1,10 +1,12 @@
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { Client } from "https://deno.land/x/postgres/mod.ts";
+import { cuid as generateSessionID } from "https://deno.land/x/cuid@v1.0.0/index.js";
 
 import {
   getAllUsers,
   getUserByEmail,
   getUserBySessionID,
+  addUser,
 } from "../utils/db.ts";
 
 export default class Account {
@@ -26,11 +28,11 @@ export default class Account {
   }
 
   static fromSqlQuery(cols: Array<any>): Account {
-    const id = cols[0];
+    const account_id = cols[0];
     const email = cols[1];
     const password = cols[2];
     const sessionID = cols[3];
-    const account = new Account(id, email, "temp", sessionID);
+    const account = new Account(email, "temp", sessionID, account_id);
     account.password = password;
     return account;
   }
@@ -44,16 +46,25 @@ export default class Account {
     return accounts;
   }
 
-  static async getByEmail(db: Client, email: string): Promise<Account> {
-    const accountCol = await getUserByEmail(db, email);
+  static async getByEmail(db: Client, email: string): Promise<Account | null> {
+    const accountCol = (await getUserByEmail(db, email))[0];
+    if (!accountCol || accountCol.length === 0) return null;
     const account = Account.fromSqlQuery(accountCol);
     return account;
   }
 
-  static async getBySessionID(db: Client, sessionID: string): Promise<Account> {
+  static async getBySessionID(
+    db: Client,
+    sessionID: string
+  ): Promise<Account | null> {
     const accountCol = await getUserBySessionID(db, sessionID);
+    if (!accountCol || accountCol.length === 0) return null;
     const account = Account.fromSqlQuery(accountCol);
     return account;
+  }
+
+  verifyPassword(password: string) {
+    return bcrypt.compare(password, this.password);
   }
 
   static verifyPassword(
@@ -63,7 +74,17 @@ export default class Account {
     return bcrypt.compare(password, passwordHash);
   }
 
-  static async createAccount() {}
+  static async createAccount(
+    db: Client,
+    email: string,
+    password: string
+  ): Promise<Account> {
+    const sessionID = generateSessionID();
+    const account = new Account(email, password, sessionID);
+    const accountID = await addUser(db, account);
+    account.account_id = accountID;
+    return account;
+  }
 
   static async updateAccount() {}
 
