@@ -42,6 +42,13 @@ export const addUser = async (db: Client, user: Account) => {
   );
   return result.rows[0][0];
 };
+export const updateSessionID = async (
+  db: Client,
+  email: string,
+  sessionID: string
+) => {
+  await db.query(queries.UPDATE_SESSION_ID_QUERY, email, sessionID);
+};
 // Form Tx's
 export const addForm = async (db: Client, form: Form) => {
   const result = await db.query(
@@ -117,6 +124,7 @@ export const addMatching = async (db: Client, matching: Matching) => {
   );
   return result.rows[0][0];
 };
+
 // Main DB Function
 export const disconnectFromDB = async (db: Client) => await db.end();
 

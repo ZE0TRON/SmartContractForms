@@ -99,3 +99,7 @@ export const CREATE_FORM_QUERY = `
   values ($1, $2, $3)
   returning form_id;
 `;
+// UPDATE QUERIES
+export const UPDATE_SESSION_ID_QUERY = `
+ update users set session_id = $2 where email = $1;
+`;

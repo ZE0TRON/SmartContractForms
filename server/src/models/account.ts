@@ -7,6 +7,7 @@ import {
   getUserByEmail,
   getUserBySessionID,
   addUser,
+  updateSessionID,
 } from "../utils/db.ts";
 
 export default class Account {
@@ -63,8 +64,19 @@ export default class Account {
     return account;
   }
 
-  verifyPassword(password: string) {
-    return bcrypt.compare(password, this.password);
+  async verifyPassword(password: string) {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  async createNewSession(db: Client) {
+    this.sessionID = generateSessionID();
+    this.updateSessionAtDB(db);
+  }
+
+  async updateSessionAtDB(db: Client) {
+    if (this.sessionID) {
+      await updateSessionID(db, this.email, this.sessionID);
+    }
   }
 
   static verifyPassword(

@@ -1,20 +1,33 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
+import { Client } from "https://deno.land/x/postgres/mod.ts";
+
 import { connectToDB, disconnectFromDB } from "./utils/db.ts";
 import router from "./routers/index.ts";
+
+// Global db connection
+declare global {
+  var db: Client;
+  interface Window {
+    db: Client;
+  }
+}
 
 const app = new Application();
 
 const sigterm = Deno.signals.terminate();
 const sigint = Deno.signals.interrupt();
-
+let client: Client;
 const cleanUpAndExit = async () => {
   console.log("Cleaning up");
-  await disconnectFromDB();
+  if (window.db) {
+    await disconnectFromDB(client);
+  }
   Deno.exit(1);
 };
 
 try {
-  await connectToDB();
+  const client = await connectToDB();
+  window.db = client;
   sigterm.then(cleanUpAndExit);
   sigint.then(cleanUpAndExit);
 } catch (err) {
