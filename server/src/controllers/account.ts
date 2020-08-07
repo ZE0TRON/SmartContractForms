@@ -36,7 +36,7 @@ export const createAccount = async ({ request, response, cookies }) => {
   const password = body.password;
   const account = await Account.createAccount(window.db, email, password);
   cookies.set(SESSION_ID_COOKIE_NAME, account.sessionID);
-  response.body = { success: true };
+  response.body = new BasicResponse(true).toJSON();
 };
 
 // @ts-ignore
