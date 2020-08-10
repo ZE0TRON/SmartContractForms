@@ -1,4 +1,4 @@
-class MatchingDTO {
+export class MatchingDTO {
   form_field: string;
   contract_parameter: string;
   constructor(form_field: string, contract_parameter: string) {
@@ -7,7 +7,7 @@ class MatchingDTO {
   }
 }
 
-class ContractDTO {
+export class ContractDTO {
   address: string;
   method: string;
   abi: string;
@@ -18,7 +18,7 @@ class ContractDTO {
   }
 }
 
-class IntegrationDTO {
+export class IntegrationDTO {
   contract: ContractDTO;
   matchings: MatchingDTO[];
   form_url: string;
@@ -33,7 +33,7 @@ class IntegrationDTO {
   }
 }
 
-export default class FormDTO {
+export class FormDTO {
   integration: IntegrationDTO;
   constructor(integration: IntegrationDTO) {
     this.integration = integration;

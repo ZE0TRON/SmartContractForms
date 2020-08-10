@@ -1,7 +1,11 @@
-import FormDTO from "../utils/middleware/dto/form.ts";
+import { Client } from "https://deno.land/x/postgres/mod.ts";
+
 import Matching from "./matching.ts";
 import Integration from "./integration.ts";
+import createPage from "../utils/form/createPage.ts";
+import { FormDTO } from "../utils/middleware/dto/form.ts";
 import { addForm } from "../utils/db.ts";
+
 export default class Form {
   form_id: number;
   integration_id: number;
@@ -25,18 +29,20 @@ export default class Form {
     const contractDTO = integrationDTO.contract;
     const matchingDTOs = integrationDTO.matchings;
     const matchings = new Array<Matching>();
-    const integration = Integration.fromDTO(integrationDTO);
+    const integration = await Integration.fromDTO(db, user_id, integrationDTO);
 
     for (let matchingDTO of matchingDTOs) {
-      const matching = Matching.fromDTO(
+      const matching = await Matching.fromDTO(
+        db,
         matchingDTO,
         integration.integration_id
       );
       matchings.push(matching);
     }
-    const page = createPage(integration, matchings);
-    const form = new Form(integration.id, user_id, page);
+    const page = await createPage(integration, matchings);
+    const form = new Form(integration.integration_id, user_id, page);
     const form_id = await addForm(db, form);
     form.form_id = form_id;
+    return form;
   }
 }

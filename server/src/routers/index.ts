@@ -1,11 +1,11 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
 
 import withAccountRoutes from "./account.ts";
-import withContractRoutes from "./contract.ts";
+import withFormRoutes from "./form.ts";
 
 const router = new Router();
 
 withAccountRoutes(router);
-withContractRoutes(router);
+withFormRoutes(router);
 
 export default router;

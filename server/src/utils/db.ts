@@ -17,7 +17,7 @@ const DB_PORT = parseInt(Deno.env.get("DB_PORT") || "5432");
 // Account Tx's
 export const getUserByEmail = async (db: Client, email: string) => {
   const result = await db.query(queries.GET_USER_BY_EMAIL_QUERY, email);
-  return result.rows;
+  return result.rows[0];
 };
 
 export const getUserBySessionID = async (db: Client, sessionID: string) => {
@@ -25,7 +25,7 @@ export const getUserBySessionID = async (db: Client, sessionID: string) => {
     queries.GET_USER_BY_SESSION_ID_QUERY,
     sessionID
   );
-  return result.rows;
+  return result.rows[0];
 };
 
 export const getAllUsers = async (db: Client) => {
@@ -49,6 +49,7 @@ export const updateSessionID = async (
 ) => {
   await db.query(queries.UPDATE_SESSION_ID_QUERY, email, sessionID);
 };
+
 // Form Tx's
 export const addForm = async (db: Client, form: Form) => {
   const result = await db.query(
@@ -64,6 +65,7 @@ export const getFormsOfUser = async (db: Client, user_id: number) => {
   const result = await db.query(queries.GET_FORMS_OF_USER_QUERY, user_id);
   return result.rows;
 };
+
 // Integration Tx's
 export const getIntegrationsOfForm = async (
   db: Client,

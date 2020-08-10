@@ -6,8 +6,10 @@ const SESSION_ID_COOKIE_NAME = "sessionID";
 // @ts-ignore
 
 export const validateUser = async (ctx, next) => {
+  console.log("checking user");
   const sessionID = ctx.cookies.get(SESSION_ID_COOKIE_NAME);
   if (!sessionID) {
+    console.log("no session");
     ctx.response.body = new BasicResponse(
       false,
       "You are not logged in"
@@ -15,8 +17,11 @@ export const validateUser = async (ctx, next) => {
     ctx.response.status = 401;
     return;
   }
+  //@ts-ignore
+  console.log("Getting user");
   const user = await Account.getBySessionID(window.db, sessionID);
   if (!user) {
+    console.log("no user");
     ctx.response.body = new BasicResponse(
       false,
       "Session is expired please login again"
@@ -24,8 +29,9 @@ export const validateUser = async (ctx, next) => {
     ctx.response.status = 401;
     return;
   }
+  console.log("calling next");
   ctx.request.user = user;
-  next();
+  await next();
 };
 
 // @ts-ignore
@@ -34,6 +40,7 @@ export const createAccount = async ({ request, response, cookies }) => {
   const body = await requestBody.value;
   const email = body.email;
   const password = body.password;
+  //@ts-ignore
   const account = await Account.createAccount(window.db, email, password);
   cookies.set(SESSION_ID_COOKIE_NAME, account.sessionID);
   response.body = new BasicResponse(true).toJSON();
@@ -43,6 +50,7 @@ export const createAccount = async ({ request, response, cookies }) => {
 export const login = async ({ request, response, cookies }) => {
   const body = request.body();
   const { email, password } = await body.value;
+  //@ts-ignore
   const user = await Account.getByEmail(window.db, email);
   if (!user) {
     response.body = new BasicResponse(false, "No such user").toJSON();
