@@ -92,6 +92,7 @@ export default class Account {
     password: string
   ): Promise<Account> {
     const sessionID = generateSessionID();
+    console.log(password);
     const account = new Account(email, password, sessionID);
     const accountID = await addUser(db, account);
     account.account_id = accountID;

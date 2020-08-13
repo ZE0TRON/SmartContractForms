@@ -1,5 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
 import { Client } from "https://deno.land/x/postgres/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import { connectToDB, disconnectFromDB } from "./utils/db.ts";
 import router from "./routers/index.ts";
@@ -34,6 +35,8 @@ try {
   console.log("DB error : ", err);
 }
 try {
+  //TODO set proper cors
+  app.use(oakCors());
   app.use(router.routes());
   app.use(router.allowedMethods());
   await app.listen({ port: 8000 });

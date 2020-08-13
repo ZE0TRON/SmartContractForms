@@ -57,6 +57,7 @@ export const login = async ({ request, response, cookies }) => {
     response.status = 401;
     return;
   }
+  console.log(password);
   const isValid = await user.verifyPassword(password);
   console.log(isValid);
   if (!isValid) {
