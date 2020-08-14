@@ -66,6 +66,11 @@ export const getFormsOfUser = async (db: Client, user_id: number) => {
   return result.rows;
 };
 
+export const getFormByID = async (db: Client, form_id: number) => {
+  const result = await db.query(queries.GET_FORM_BY_ID_QUERY, form_id);
+  return result.rows[0];
+};
+
 // Integration Tx's
 export const getIntegrationsOfForm = async (
   db: Client,

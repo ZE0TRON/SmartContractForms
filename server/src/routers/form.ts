@@ -6,7 +6,9 @@ import { validateUser } from "../controllers/account.ts";
 const SUB_ROUTE = "/form";
 
 const withFormRoutes = (router: Router) => {
-  router.post(SUB_ROUTE + "/new", validateUser, FormController.createForm);
+  router
+    .post(SUB_ROUTE + "/new", validateUser, FormController.createForm)
+    .get(SUB_ROUTE + "/:id", FormController.getForm);
 };
 
 export default withFormRoutes;

@@ -2,14 +2,18 @@ import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { Button, Form } from "react-bootstrap";
 import { getFormField } from "../utils/formParser";
 
-export default function FormInfo(props: { onFieldsUpdated: any }) {
-  const [url, setUrl] = useState("");
+export default function FormInfo(props: {
+  formUrl: string;
+  onFormUrlUpdated: any;
+  onFieldsUpdated: any;
+}) {
+  const { formUrl, onFormUrlUpdated, onFieldsUpdated } = props;
   const updateUrl = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setUrl(target.value);
+    onFormUrlUpdated(target.value);
   };
   const getFields = async () => {
-    const newFields = await getFormField(url);
+    const newFields = await getFormField(formUrl);
     props.onFieldsUpdated(newFields);
   };
   return (
@@ -17,7 +21,7 @@ export default function FormInfo(props: { onFieldsUpdated: any }) {
       <Form.Group controlId="formUrl">
         <Form.Label>JotForm Url</Form.Label>
         <Form.Control
-          value={url}
+          value={formUrl}
           type="text"
           placeholder="Enter form url"
           onChange={updateUrl}

@@ -51,6 +51,9 @@ export const GET_ALL_FORMS_QUERY = `
 export const GET_ALL_INTEGRATIONS_QUERY = `
   select * from integrations;
 `;
+export const GET_FORM_BY_ID_QUERY = `
+  select * from forms where form_id = $1;
+`;
 
 // QUERIES WITH PARAMETERS
 export const GET_USER_BY_EMAIL_QUERY = `

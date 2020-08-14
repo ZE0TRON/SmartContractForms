@@ -4,7 +4,7 @@ import Matching from "./matching.ts";
 import Integration from "./integration.ts";
 import createPage from "../utils/form/createPage.ts";
 import { FormDTO } from "../utils/middleware/dto/form.ts";
-import { addForm } from "../utils/db.ts";
+import { addForm, getFormByID } from "../utils/db.ts";
 
 export default class Form {
   form_id: number;
@@ -43,6 +43,18 @@ export default class Form {
     const form = new Form(integration.integration_id, user_id, page);
     const form_id = await addForm(db, form);
     form.form_id = form_id;
+    return form;
+  }
+
+  static async getByID(db: Client, form_id: number) {
+    return this.fromSqlQuery(await getFormByID(db, form_id));
+  }
+  static fromSqlQuery(cols: Array<any>) {
+    const form_id = cols[0];
+    const integration_id = cols[1];
+    const user_id = cols[2];
+    const page = cols[3];
+    const form = new Form(integration_id, user_id, page, form_id);
     return form;
   }
 }

@@ -6,30 +6,45 @@ import {
   Row,
   Col,
   Dropdown,
-  DropdownButton
+  DropdownButton,
 } from "react-bootstrap";
 
 export default function ContractInfoForm(props: {
   eth: Eth;
   onMethodParamsUpdated: any;
+  contractAddress: string;
+  abi: any;
+  methodName: string;
+  onContractAddressUpdated: any;
+  onAbiUpdated: any;
+  onMethodNameUpdated: any;
 }) {
-  const { eth, onMethodParamsUpdated } = props;
-  const [address, setAddress] = useState("");
-  const [abi, setAbi] = useState("");
+  const {
+    eth,
+    contractAddress,
+    abi,
+    methodName,
+    onContractAddressUpdated,
+    onAbiUpdated,
+    onMethodNameUpdated,
+    onMethodParamsUpdated,
+  } = props;
+  //const [address, setAddress] = useState("");
+  //const [abi, setAbi] = useState("");
   const [methods, setMethods] = useState(["Select Method"]);
-  const [method, setMethod] = useState("Select Method");
+  //const [method, setMethod] = useState("Select Method");
   const updateAddress = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setAddress(target.value);
+    onContractAddressUpdated(target.value);
   };
   const updateAbi = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setAbi(target.value);
+    onAbiUpdated(target.value);
   };
   const methodSelected = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     const newMethod = target.innerText;
-    setMethod(newMethod);
+    onMethodNameUpdated(newMethod);
     getParams(newMethod);
   };
   const getParams = (methodName: string) => {
@@ -42,7 +57,7 @@ export default function ContractInfoForm(props: {
     if (typeof eth === "undefined") {
       console.log("Enable Eth first");
     }
-    eth.setContract(address, JSON.parse(abi));
+    eth.setContract(contractAddress, JSON.parse(abi));
     setMethods(eth.getContractMethods());
   };
   return (
@@ -51,7 +66,7 @@ export default function ContractInfoForm(props: {
         <Form.Group controlId="formAddress">
           <Form.Label>Contract Info</Form.Label>
           <Form.Control
-            value={address}
+            value={contractAddress}
             type="text"
             placeholder="Enter contract address"
             onChange={updateAddress}
@@ -70,8 +85,8 @@ export default function ContractInfoForm(props: {
       </Form>
       <Row className="mt-2 mb-2">
         <Col>
-          <DropdownButton id="dropdown-basic-button" title={method}>
-            {methods.map(methodName => (
+          <DropdownButton id="dropdown-basic-button" title={methodName}>
+            {methods.map((methodName) => (
               <Dropdown.Item key={methodName} onClick={methodSelected}>
                 {methodName}
               </Dropdown.Item>

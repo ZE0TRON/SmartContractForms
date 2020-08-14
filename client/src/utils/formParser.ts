@@ -22,7 +22,7 @@ export function parseForm(page: string): Array<string> {
   const labelElems = $(".form-label");
   const fields = new Array<string>();
   //console.log(labelElems);
-  labelElems.each(function(this: any, index: number, elem: CheerioElement) {
+  labelElems.each(function (this: any, index: number, elem: any) {
     fields.push($(this).text());
   });
   return fields;

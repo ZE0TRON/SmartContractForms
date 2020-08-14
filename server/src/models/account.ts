@@ -48,8 +48,8 @@ export default class Account {
   }
 
   static async getByEmail(db: Client, email: string): Promise<Account | null> {
-    const accountCol = (await getUserByEmail(db, email))[0];
-    if (!accountCol || accountCol.length === 0) return null;
+    const accountCol = await getUserByEmail(db, email);
+    if (!accountCol || typeof accountCol === "undefined") return null;
     const account = Account.fromSqlQuery(accountCol);
     return account;
   }
@@ -92,7 +92,6 @@ export default class Account {
     password: string
   ): Promise<Account> {
     const sessionID = generateSessionID();
-    console.log(password);
     const account = new Account(email, password, sessionID);
     const accountID = await addUser(db, account);
     account.account_id = accountID;

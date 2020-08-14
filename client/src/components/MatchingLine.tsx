@@ -20,7 +20,7 @@ export default function MatchingLine(props: {
   const onFieldChange = (ddIndex: number) => {
     const newField = fields[ddIndex];
     if (newField !== field) {
-      onLineChange("param", newField, index);
+      onLineChange("field", newField, index);
     }
   };
   return (
@@ -31,7 +31,7 @@ export default function MatchingLine(props: {
           {fields.map((field, index: number) => (
             <Dropdown.Item
               key={field}
-              onClick={e => {
+              onClick={(e) => {
                 onFieldChange(index);
               }}
             >
@@ -49,7 +49,7 @@ export default function MatchingLine(props: {
           {params.map((param, index: number) => (
             <Dropdown.Item
               key={param.name}
-              onClick={e => {
+              onClick={(e) => {
                 onParamChange(index, "param");
               }}
             >

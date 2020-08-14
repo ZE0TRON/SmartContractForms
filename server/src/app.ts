@@ -36,7 +36,7 @@ try {
 }
 try {
   //TODO set proper cors
-  app.use(oakCors());
+  app.use(oakCors({ credentials: true, origin: "http://localhost:3000" }));
   app.use(router.routes());
   app.use(router.allowedMethods());
   await app.listen({ port: 8000 });

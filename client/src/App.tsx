@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from "react-router";
 import EmailForm from "./components/form";
 import IntegrationPage from "./components/integration";
 import TopNavbar from "./components/TopNavbar";
+import { LoginScreen } from "./components/login";
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,7 @@ function App() {
       <Switch>
         <Route path="/integration" component={IntegrationPage} />
         <Route path="/form" component={EmailForm} />
+        <Route path="/login" component={LoginScreen} />
         <Redirect to="/form" />
         <IntegrationPage />
       </Switch>
