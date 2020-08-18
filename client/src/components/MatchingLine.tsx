@@ -1,15 +1,16 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import { MatchingTuple, MethodParam } from "../utils/types";
+import { MatchingTuple, MethodParam, FormField } from "../utils/types";
 export default function MatchingLine(props: {
-  fields: Array<string>;
+  fields: Array<FormField>;
   params: Array<MethodParam>;
-  field: string;
+  field: FormField;
   param: MethodParam;
   onLineChange: any;
   index: number;
 }) {
   const { fields, params, field, param, onLineChange, index } = props;
+  console.log(fields);
   const onParamChange = (ddIndex: number, fieldType: string) => {
     const newParam = params[ddIndex];
     if (param.name !== newParam.name) {
@@ -27,15 +28,19 @@ export default function MatchingLine(props: {
     <tr>
       <td>{index}</td>
       <td>
-        <DropdownButton variant="info" id="dropdown-basic-button" title={field}>
+        <DropdownButton
+          variant="info"
+          id="dropdown-basic-button"
+          title={field.field}
+        >
           {fields.map((field, index: number) => (
             <Dropdown.Item
-              key={field}
+              key={field.id}
               onClick={(e) => {
                 onFieldChange(index);
               }}
             >
-              {field}
+              {field.field}
             </Dropdown.Item>
           ))}
         </DropdownButton>

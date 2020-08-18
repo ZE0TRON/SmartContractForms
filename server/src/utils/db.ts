@@ -56,7 +56,8 @@ export const addForm = async (db: Client, form: Form) => {
     queries.CREATE_FORM_QUERY,
     form.integration_id,
     form.user_id,
-    form.page
+    form.page,
+    form.name
   );
   return result.rows[0][0];
 };
@@ -72,13 +73,10 @@ export const getFormByID = async (db: Client, form_id: number) => {
 };
 
 // Integration Tx's
-export const getIntegrationsOfForm = async (
-  db: Client,
-  integration_id: number
-) => {
+export const getIntegrationsOfForm = async (db: Client, form_id: number) => {
   const result = await db.query(
     queries.GET_INTEGRATIONS_OF_FORM_QUERY,
-    integration_id
+    form_id
   );
   return result.rows;
 };

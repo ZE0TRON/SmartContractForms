@@ -3,7 +3,7 @@ import RP from "request-promise";
 import React, { FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export function LoginScreen() {
+export function SignupScreen() {
   const [errMessage, setErrMessage] = useState();
   const history = useHistory();
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -14,7 +14,7 @@ export function LoginScreen() {
     console.log(email, password);
     const options = {
       method: "POST",
-      uri: "https://localhost:8000/account/login",
+      uri: "https://localhost:8000/account/create",
       body: {
         email: email,
         password: password,
@@ -62,8 +62,8 @@ export function LoginScreen() {
                 name="password"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
+            <Button variant="success" type="submit">
+              Register
             </Button>
           </Form>
           {errMessage}

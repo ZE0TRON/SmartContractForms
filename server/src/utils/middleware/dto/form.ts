@@ -35,7 +35,20 @@ export class IntegrationDTO {
 
 export class FormDTO {
   integration: IntegrationDTO;
-  constructor(integration: IntegrationDTO) {
+  name: string;
+  constructor(integration: IntegrationDTO, name: string) {
     this.integration = integration;
+    this.name = name;
+  }
+}
+
+export class FormListingDTO {
+  form_id: number;
+  name: string;
+  jotform_url: string;
+  constructor(form_id: number, name: string, jotform_url: string) {
+    this.form_id = form_id;
+    this.name = name;
+    this.jotform_url = jotform_url;
   }
 }

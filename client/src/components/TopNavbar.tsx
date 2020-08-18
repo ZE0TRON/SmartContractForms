@@ -7,8 +7,12 @@ export default function TopNavbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/form">Form</Nav.Link>
-          <Nav.Link href="/integration">Integration</Nav.Link>
+          <Nav.Link href="/form">Forms</Nav.Link>
+          <Nav.Link href="/integration">Create Integration</Nav.Link>
+        </Nav>
+        <Nav>
+          <Nav.Link href="/login">Login</Nav.Link>
+          <Nav.Link href="/signup">Sign Up</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

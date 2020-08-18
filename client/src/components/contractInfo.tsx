@@ -15,6 +15,7 @@ export default function ContractInfoForm(props: {
   contractAddress: string;
   abi: any;
   methodName: string;
+  onErr: any;
   onContractAddressUpdated: any;
   onAbiUpdated: any;
   onMethodNameUpdated: any;
@@ -28,6 +29,7 @@ export default function ContractInfoForm(props: {
     onAbiUpdated,
     onMethodNameUpdated,
     onMethodParamsUpdated,
+    onErr,
   } = props;
   //const [address, setAddress] = useState("");
   //const [abi, setAbi] = useState("");
@@ -53,9 +55,11 @@ export default function ContractInfoForm(props: {
     onMethodParamsUpdated(params || []);
     //console.log(params);
   };
-  const getMethods = () => {
-    if (typeof eth === "undefined") {
-      console.log("Enable Eth first");
+  const getMethods = async () => {
+    console.log(eth);
+    if (typeof eth === "undefined" || !eth || Object.keys(eth).length === 0) {
+      onErr("Please enable ethereum before getting contract info");
+      return;
     }
     eth.setContract(contractAddress, JSON.parse(abi));
     setMethods(eth.getContractMethods());

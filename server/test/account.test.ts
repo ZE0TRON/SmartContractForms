@@ -1,4 +1,4 @@
-import { Rhum } from "../lib/rhum/mod.ts";
+import { Rhum } from "https://deno.land/x/rhum@v1.1.2/mod.ts";
 import { Client } from "https://deno.land/x/postgres/mod.ts";
 
 import * as db from "../src/utils/db.ts";

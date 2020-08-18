@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { Table, Button } from "react-bootstrap";
-import { MatchingTuple, MethodParam } from "../utils/types";
+import { MatchingTuple, MethodParam, FormField } from "../utils/types";
 import MatchingLine from "./MatchingLine";
 export default function IntegrationTable(props: {
-  fields: Array<string>;
+  fields: Array<FormField>;
   params: Array<MethodParam>;
   matchings: Array<MatchingTuple>;
   // TODO create a type for this function
@@ -12,7 +12,7 @@ export default function IntegrationTable(props: {
   const { fields, params, matchings, onMatchingsChange } = props;
   const onLineChange = (
     fieldType: string,
-    newParam: MethodParam | string,
+    newParam: MethodParam | FormField,
     index: number
   ) => {
     const newMatchings: Array<MatchingTuple> = [...matchings];
@@ -20,7 +20,7 @@ export default function IntegrationTable(props: {
     if (fieldType === "param") {
       newMatchings[index].param = newParam as MethodParam;
     } else if (fieldType === "field") {
-      newMatchings[index].field = newParam as string;
+      newMatchings[index].field = newParam as FormField;
     }
     onMatchingsChange(newMatchings);
   };

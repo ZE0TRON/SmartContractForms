@@ -31,7 +31,8 @@ export const CREATE_FORM_TABLE_QUERY = `
     form_id serial primary key,
     integration_id int not null,
     user_id int not null,
-    page text not null
+    page text not null,
+    name varchar(50) not null
   );
 `;
 
@@ -98,8 +99,8 @@ export const CREATE_MATCHING_QUERY = `
   returning matching_id;
 `;
 export const CREATE_FORM_QUERY = `
-  insert into forms (integration_id,user_id,page)
-  values ($1, $2, $3)
+  insert into forms (integration_id,user_id,page,name)
+  values ($1, $2, $3, $4)
   returning form_id;
 `;
 // UPDATE QUERIES

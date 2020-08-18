@@ -14,7 +14,7 @@ export default function FormInfo(props: {
   };
   const getFields = async () => {
     const newFields = await getFormField(formUrl);
-    props.onFieldsUpdated(newFields);
+    onFieldsUpdated(newFields);
   };
   return (
     <Form>

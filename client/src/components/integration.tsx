@@ -1,10 +1,12 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
-import { Button, Row, Col, Container } from "react-bootstrap";
+import { Button, Row, Col, Container, Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import RP from "request-promise";
 import Eth from "../ethereum/eth";
 import { connectToEth } from "../ethereum/metamask";
 import EnableEthButton from "./enableEthButton";
 import IntegrationTable from "./integrationTable";
+import ErrorToast from "./errorToast";
 import {
   MatchingTuple,
   MethodParam,
@@ -12,13 +14,16 @@ import {
   ContractDTO,
   MatchingDTO,
   IntegrationDTO,
+  FormField,
 } from "../utils/types";
 import FormInfo from "./formInfo";
 import ContractInfoForm from "./contractInfo";
 // TODO split this component to two different components
 
 function IntegrationPage() {
-  const [fields, setFields] = useState(["Select Field"]);
+  const [fields, setFields] = useState([
+    { field: "Select Field", id: 0 } as FormField,
+  ]);
   const [methodParams, setMethodParams] = useState([
     { name: "Select Param", paramType: "string" } as MethodParam,
   ]);
@@ -28,12 +33,27 @@ function IntegrationPage() {
   const [contractAddress, setContractAddress] = useState("");
   const [abi, setAbi] = useState("");
   const [methodName, setMethodName] = useState("");
+  const [formName, setFormName] = useState("");
+  const [err, setErr] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const history = useHistory();
+  const onErr = (err: string) => {
+    setErr(err);
+    setShowToast(true);
+  };
   const onMatchingsChange = (newMatchings: Array<MatchingTuple>) =>
     setMatchings(newMatchings);
 
   const onMethodParamsUpdated = (newParams: Array<MethodParam>) =>
     setMethodParams(newParams);
-  const onFieldsUpdated = (newFields: Array<string>) => setFields(newFields);
+  const onFieldsUpdated = (newFields: Array<FormField>) => {
+    console.log(newFields);
+    setFields(newFields);
+  };
+  const updateFormName = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setFormName(target.value);
+  };
   const enableEth = async () => {
     setEth(await connectToEth());
   };
@@ -63,28 +83,34 @@ function IntegrationPage() {
   };
   const onCreateClicked = (e: MouseEvent) => {
     const matchingDTOs = matchings.map(
-      (matching) => new MatchingDTO(matching.field, matching.param.name)
+      (matching: MatchingTuple) =>
+        new MatchingDTO("input_" + matching.field.id, matching.param.name)
     );
-    const contractDTO = new ContractDTO(contractAddress, methodName, abi);
+    const contractDTO = new ContractDTO(
+      contractAddress,
+      methodName.split("(")[0],
+      abi
+    );
     const integrationDTO = new IntegrationDTO(
       contractDTO,
       matchingDTOs,
       formUrl
     );
-    const formDTO = new FormDTO(integrationDTO);
+    const formDTO = new FormDTO(integrationDTO, formName);
     const options = {
       method: "POST",
-      uri: "http://localhost:8000/form/new",
+      uri: "https://localhost:8000/form/new",
       body: formDTO,
       json: true, // Automatically stringifies the body to JSON
       jar: true,
       withCredentials: true,
     };
-
+    console.log(formDTO);
     RP(options)
       .then(function (parsedBody) {
         // POST succeeded...
         console.log(parsedBody);
+        history.push("/form");
       })
       .catch(function (err) {
         // POST failed...
@@ -94,6 +120,28 @@ function IntegrationPage() {
   return (
     <Container>
       <Row>
+        <Col xs={6}>
+          <ErrorToast
+            err={err}
+            showToast={showToast}
+            setShowToast={setShowToast}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form>
+            <Form.Group controlId="formUrl">
+              <Form.Label>Form Name</Form.Label>
+              <Form.Control
+                value={formName}
+                type="text"
+                placeholder="Enter form name"
+                onChange={updateFormName}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
         <Col>
           <EnableEthButton onClick={enableEth} />
         </Col>
@@ -112,6 +160,7 @@ function IntegrationPage() {
             contractAddress={contractAddress}
             abi={abi}
             methodName={methodName}
+            onErr={onErr}
             onContractAddressUpdated={onContractAddressUpdated}
             onMethodParamsUpdated={onMethodParamsUpdated}
             onAbiUpdated={onAbiUpdated}

@@ -3,5 +3,6 @@
 .AppleDouble
 .LSOverride
 # Key files
-.key
-.env
+*.key
+*.env
+*.pem

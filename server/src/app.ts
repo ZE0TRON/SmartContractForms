@@ -13,6 +13,8 @@ declare global {
   }
 }
 
+//const keyFile = Deno.readTextFileSync("./config/key.pem");
+//const certFile = Deno.readTextFileSync("./config/cert.pem");
 const app = new Application();
 
 const sigterm = Deno.signals.terminate();
@@ -39,7 +41,12 @@ try {
   app.use(oakCors({ credentials: true, origin: "http://localhost:3000" }));
   app.use(router.routes());
   app.use(router.allowedMethods());
-  await app.listen({ port: 8000 });
+  await app.listen({
+    port: 8000,
+    secure: true,
+    keyFile: "./config/key.pem",
+    certFile: "./config/cert.pem",
+  });
 } catch (err) {
   console.log("Unhandled Error closing the app error : ", err);
   await cleanUpAndExit();

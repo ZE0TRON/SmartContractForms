@@ -1,4 +1,5 @@
-import { Rhum } from "../lib/rhum/mod.ts";
+import { Rhum } from "https://deno.land/x/rhum@v1.1.2/mod.ts";
+
 import { Client } from "https://deno.land/x/postgres/mod.ts";
 
 import * as db from "../src/utils/db.ts";
@@ -25,29 +26,29 @@ Rhum.testPlan("utils/db.ts", () => {
     Rhum.testCase("addUser(),getUserByEmail()", async () => {
       const user = new Account("cmpbilge@gmail.com", "hash", null);
       const userID = await db.addUser(client, user);
-      const users = await db.getUserByEmail(client, "cmpbilge@gmail.com");
-      assert(users && typeof users !== "undefined");
-      assertNotEquals(users.length, 0);
+      const dbUser = await db.getUserByEmail(client, "cmpbilge@gmail.com");
+      assert(dbUser && typeof dbUser !== "undefined");
       //assertEquals(users[0][0], userID);
-      assertEquals(users[0][1], "cmpbilge@gmail.com");
+      assertEquals(dbUser[1], "cmpbilge@gmail.com");
     });
   });
   Rhum.testSuite("Form TXs", () => {
     Rhum.testCase("addForm(),getFormsOfUser()", async () => {
-      const form = new Form(1, 6, "<html>");
+      const form = new Form(1, 6, "<html>", "token form");
       const formID = await db.addForm(client, form);
       const forms = await db.getFormsOfUser(client, 6);
       assert(forms && typeof forms !== "undefined");
       assertNotEquals(forms.length, 0);
       assertEquals(forms[0][0], formID);
       assertEquals(forms[0][3], "<html>");
+      assertEquals(forms[0][4], "token form");
     });
   });
 
   Rhum.testSuite("Integration TXs", () => {
     Rhum.testCase("addIntegration(),getIntegrationByID()", async () => {
       //  (user_id,contract_address,contract_abi,contract_method,form_url)
-      const integration = new Integration(1, address, abi, "newMessage");
+      const integration = new Integration(1, address, abi, "newMessage", "url");
       const integrationID = await db.addIntegration(client, integration);
       const retrievedIntegration = await db.getIntegrationByID(
         client,

@@ -1,5 +1,5 @@
 import { connectToDB, disconnectFromDB, clearDB } from "../src/utils/db.ts";
 
-await connectToDB();
-await clearDB();
-await disconnectFromDB();
+const client = await connectToDB();
+await clearDB(client);
+await disconnectFromDB(client);

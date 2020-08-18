@@ -1,5 +1,5 @@
 export interface MatchingTuple {
-  field: string;
+  field: FormField;
   param: MethodParam;
 }
 export interface ContractInfo {
@@ -24,6 +24,12 @@ export interface MethodParam {
   name: string;
   paramType: string;
 }
+
+export interface FormField {
+  field: string;
+  id: number;
+}
+
 export class MatchingDTO {
   form_field: string;
   contract_parameter: string;
@@ -61,7 +67,9 @@ export class IntegrationDTO {
 
 export class FormDTO {
   integration: IntegrationDTO;
-  constructor(integration: IntegrationDTO) {
+  name: string;
+  constructor(integration: IntegrationDTO, name: string) {
+    this.name = name;
     this.integration = integration;
   }
 }

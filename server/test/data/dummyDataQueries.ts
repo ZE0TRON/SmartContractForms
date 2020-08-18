@@ -67,8 +67,8 @@ export const POPULATE_USERS_QUERY = `
     ('abc5@example.com','hash5','session5secret') ;
 `;
 export const POPULATE_FORMS_QUERY = `
-  insert into forms (user_id ,integration_id,page) 
-  values (1,2,'${forms[0]}'), (2,1,'${forms[1]}'), (4,4,'${forms[2]}'), (2,3,'${forms[3]}'), (5,5,'${forms[4]}') ;
+  insert into forms (user_id ,integration_id,page,name) 
+  values (1,2,'${forms[0]}','form1'), (2,1,'${forms[1]}','form2'), (4,4,'${forms[2]}','form3'), (2,3,'${forms[3]}','form4'), (5,5,'${forms[4]}','form5') ;
 `;
 
 export const POPULATE_INTEGRATIONS_QUERY = `

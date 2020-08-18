@@ -11,7 +11,7 @@ export const createForm = async ({ request, response, cookies }) => {
   console.log(user);
   //@ts-ignore
   const form = await Form.createForm(window.db, user.account_id, body);
-  response.body = { success: true, form: form };
+  response.body = { success: true, form_id: form.form_id };
 };
 
 export const getForm = async (ctx: Context) => {
@@ -33,4 +33,12 @@ export const getForm = async (ctx: Context) => {
   ctx.response.body = form.page;
   ctx.response.status = 200;
   return;
+};
+
+// @ts-ignore
+export const listUserForms = async ({ request, response, cookies }) => {
+  const user = request.user;
+  //@ts-ignore
+  const forms = await Form.getUserForms(window.db, user.account_id);
+  response.body = forms;
 };
