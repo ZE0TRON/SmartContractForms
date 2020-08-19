@@ -3,10 +3,9 @@ import { Client } from "https://deno.land/x/postgres/mod.ts";
 import Matching from "./matching.ts";
 import Integration from "./integration.ts";
 import createPage from "../utils/form/createPage.ts";
-import { FormDTO } from "../utils/middleware/dto/form.ts";
+import { FormDTO, FormListingDTO } from "../utils/middleware/dto/form.ts";
 import { addForm, getFormByID, getFormsOfUser } from "../utils/db.ts";
-import { FormListingDTO } from "../utils/middleware/dto/form";
-import { getIntegrationsOfForm } from "../utils/db";
+import { getIntegrationsOfForm } from "../utils/db.ts";
 
 export default class Form {
   form_id: number;
@@ -72,14 +71,18 @@ export default class Form {
     db: Client,
     form: Form
   ): Promise<FormListingDTO> {
-    const integration = await getIntegrationsOfForm(db, form.form_id);
+    const integration = Integration.fromSqlQuery(
+      (await getIntegrationsOfForm(db, form.integration_id))[0]
+    );
+    console.log(integration);
     return new FormListingDTO(form.form_id, form.name, integration.form_url);
   }
   static async getUserForms(db: Client, user_id: number) {
     const forms = (await getFormsOfUser(db, user_id)).map(this.fromSqlQuery);
-    const result = forms.map(
-      async (form) => await this.formToListingDTO(db, form)
+    const result = await Promise.all(
+      forms.map(async (form) => await this.formToListingDTO(db, form))
     );
+    console.log(result);
     return result;
   }
 }

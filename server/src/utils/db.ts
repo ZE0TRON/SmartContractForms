@@ -73,10 +73,13 @@ export const getFormByID = async (db: Client, form_id: number) => {
 };
 
 // Integration Tx's
-export const getIntegrationsOfForm = async (db: Client, form_id: number) => {
+export const getIntegrationsOfForm = async (
+  db: Client,
+  integration_id: number
+) => {
   const result = await db.query(
-    queries.GET_INTEGRATIONS_OF_FORM_QUERY,
-    form_id
+    queries.GET_INTEGRATION_OF_FORM_QUERY,
+    integration_id
   );
   return result.rows;
 };
@@ -87,12 +90,13 @@ export const addIntegration = async (db: Client, integration: Integration) => {
     integration.user_id,
     integration.contract.address,
     integration.contract.abi,
-    integration.contract.method
+    integration.contract.method,
+    integration.form_url
   );
 
   return result.rows[0][0];
 };
-
+// TODO possible duplicate check it and delete if it is duplicate
 export const getIntegrationByID = async (
   db: Client,
   integration_id: number

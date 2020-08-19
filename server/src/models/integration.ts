@@ -59,4 +59,20 @@ export default class Integration {
     integration.integration_id = integration_id;
     return integration;
   }
+  static fromSqlQuery(cols: Array<any>) {
+    const integration_id = cols[0];
+    const user_id = cols[1];
+    const contract_address = cols[2];
+    const contract_abi = cols[3];
+    const contract_method = cols[4];
+    const form_url = cols[5];
+    const integration = new Integration(
+      user_id,
+      contract_address,
+      contract_abi,
+      contract_method,
+      form_url
+    );
+    return integration;
+  }
 }

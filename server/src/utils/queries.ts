@@ -14,7 +14,8 @@ export const CREATE_INTEGRATION_TABLE_QUERY = `
     user_id int not null,
     contract_address varchar(42) not null,
     contract_abi text not null,
-    contract_method varchar(20)  not null
+    contract_method varchar(20)  not null,
+    form_url varchar(100) not null
   );
 `;
 export const CREATE_MATCHING_TABLE_QUERY = `
@@ -69,8 +70,8 @@ export const GET_INTEGRATION_OF_USER_QUERY = `
 export const GET_FORMS_OF_USER_QUERY = `
   select * from forms where user_id = $1;
 `;
-export const GET_INTEGRATIONS_OF_FORM_QUERY = `
-  select * from integrations where form_id = $1;
+export const GET_INTEGRATION_OF_FORM_QUERY = `
+  select * from integrations where integration_id = $1;
 `;
 export const GET_MATCHINGS_OF_INTEGRATION_QUERY = `
   select * from matchings where integration_id = $1;
@@ -89,8 +90,8 @@ export const CREATE_USER_QUERY = `
   returning user_id;
 `;
 export const CREATE_INTEGRATION_QUERY = `
-  insert into integrations (user_id,contract_address,contract_abi,contract_method)
-  values ($1, $2, $3, $4)
+  insert into integrations (user_id,contract_address,contract_abi,contract_method,form_url)
+  values ($1, $2, $3, $4, $5)
   returning integration_id;
 `;
 export const CREATE_MATCHING_QUERY = `

@@ -38,6 +38,7 @@ export const getForm = async (ctx: Context) => {
 // @ts-ignore
 export const listUserForms = async ({ request, response, cookies }) => {
   const user = request.user;
+  console.log(user);
   //@ts-ignore
   const forms = await Form.getUserForms(window.db, user.account_id);
   response.body = forms;

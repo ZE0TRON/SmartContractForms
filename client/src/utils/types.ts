@@ -73,3 +73,14 @@ export class FormDTO {
     this.integration = integration;
   }
 }
+
+export class FormListingDTO {
+  form_id: number;
+  name: string;
+  jotform_url: string;
+  constructor(form_id: number, name: string, jotform_url: string) {
+    this.form_id = form_id;
+    this.name = name;
+    this.jotform_url = jotform_url;
+  }
+}

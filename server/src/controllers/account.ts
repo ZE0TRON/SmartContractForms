@@ -6,7 +6,9 @@ const SESSION_ID_COOKIE_NAME = "sessionID";
 // @ts-ignore
 
 export const validateUser = async (ctx, next) => {
+  console.log("validating user");
   const sessionID = ctx.cookies.get(SESSION_ID_COOKIE_NAME);
+  console.log(sessionID);
   if (!sessionID) {
     ctx.response.body = new BasicResponse(
       false,
@@ -26,6 +28,7 @@ export const validateUser = async (ctx, next) => {
     return;
   }
   ctx.request.user = user;
+  console.log("calling next");
   await next();
 };
 
