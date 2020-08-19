@@ -18,6 +18,7 @@ import {
 } from "../utils/types";
 import FormInfo from "./formInfo";
 import ContractInfoForm from "./contractInfo";
+import PaymentIntegration from "./paymentIntegration";
 // TODO split this component to two different components
 
 function IntegrationPage() {
@@ -34,6 +35,7 @@ function IntegrationPage() {
   const [abi, setAbi] = useState("");
   const [methodName, setMethodName] = useState("");
   const [formName, setFormName] = useState("");
+  const [payment, setPayment] = useState(null);
   const [err, setErr] = useState("");
   const [showToast, setShowToast] = useState(false);
   const history = useHistory();
@@ -91,10 +93,18 @@ function IntegrationPage() {
       methodName.split("(")[0],
       abi
     );
+
+    let paymentField: null | string = null;
+    if (payment) {
+      //@ts-ignore
+      paymentField = "input_" + payment.id;
+    }
+
     const integrationDTO = new IntegrationDTO(
       contractDTO,
       matchingDTOs,
-      formUrl
+      formUrl,
+      paymentField
     );
     const formDTO = new FormDTO(integrationDTO, formName);
     const options = {
@@ -179,8 +189,17 @@ function IntegrationPage() {
       </Row>
       <Row className="mt-2">
         <Col>
+          <PaymentIntegration
+            fields={fields}
+            payment={payment}
+            setPayment={setPayment}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-2">
+        <Col>
           <Button variant="success" onClick={onCreateClicked}>
-            Create Integration
+            Finish Integration
           </Button>
         </Col>
       </Row>

@@ -24,12 +24,14 @@ export default class Integration {
   user_id: number;
   contract: Contract;
   form_url: string;
+  payment: string | null;
   constructor(
     user_id: number,
     contract_address: string,
     contract_abi: string,
     contract_method: string,
     form_url: string,
+    payment: string | null,
     integration_id: number = 0
   ) {
     this.contract = new Contract(
@@ -40,20 +42,22 @@ export default class Integration {
     this.user_id = user_id;
     this.integration_id = integration_id;
     this.form_url = form_url;
+    this.payment = payment;
   }
   static async fromDTO(
     db: Client,
     user_id: number,
     integrationDTO: IntegrationDTO
   ) {
-    const { contract, form_url } = integrationDTO;
+    const { contract, form_url, payment } = integrationDTO;
     const { address, abi, method } = contract;
     const integration = new Integration(
       user_id,
       address,
       abi,
       method,
-      form_url
+      form_url,
+      payment
     );
     const integration_id = await addIntegration(db, integration);
     integration.integration_id = integration_id;
@@ -66,12 +70,14 @@ export default class Integration {
     const contract_abi = cols[3];
     const contract_method = cols[4];
     const form_url = cols[5];
+    const payment = cols[6];
     const integration = new Integration(
       user_id,
       contract_address,
       contract_abi,
       contract_method,
-      form_url
+      form_url,
+      payment
     );
     return integration;
   }

@@ -38,7 +38,8 @@ const createPage = async (
     const matchingsString = matchings.reduce((str: string, matching) => {
       return `${str}{param:"${matching.contract_parameter}",field:"${matching.form_field}"},`;
     }, "");
-    const dataScript = `
+
+    let dataScript = `
     <script>
       const CONTRACT_ADDRESS = "${integration.contract.address}";
       const CONTRACT_ABI =${integration.contract.abi};
@@ -47,14 +48,22 @@ const createPage = async (
     </script>
   `;
 
+    if (integration.payment && typeof integration.payment !== "undefined") {
+      dataScript = dataScript.concat(
+        `
+          <script>
+            const PAYMENT_FIELD = "${integration.payment}"
+          </script>
+        `
+      );
+    }
     console.log(dataScript);
     $("head").append(dataScript);
 
     const decoder = new TextDecoder("utf-8");
     const readFileStr = async (file: string) =>
       decoder.decode(await Deno.readFile(file));
-    let jsScript;
-    jsScript = await readFileStr("./src/utils/form/injected.js");
+    const jsScript = await readFileStr("./src/utils/form/injected.js");
     console.log("File read");
 
     $("head").append("<script>" + jsScript + "</script>");

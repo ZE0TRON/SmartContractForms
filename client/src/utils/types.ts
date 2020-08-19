@@ -54,14 +54,17 @@ export class IntegrationDTO {
   contract: ContractDTO;
   matchings: MatchingDTO[];
   form_url: string;
+  payment: string | null;
   constructor(
     contract: ContractDTO,
     matchings: MatchingDTO[],
-    form_url: string
+    form_url: string,
+    payment: string | null
   ) {
     this.contract = contract;
     this.matchings = matchings;
     this.form_url = form_url;
+    this.payment = payment;
   }
 }
 

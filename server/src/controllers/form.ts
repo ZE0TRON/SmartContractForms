@@ -5,13 +5,18 @@ import BasicResponse from "../utils/middleware/basicResponse.ts";
 
 // @ts-ignore
 export const createForm = async ({ request, response, cookies }) => {
-  const requestBody = request.body();
-  const body = await requestBody.value;
-  const user = request.user;
-  console.log(user);
-  //@ts-ignore
-  const form = await Form.createForm(window.db, user.account_id, body);
-  response.body = { success: true, form_id: form.form_id };
+  console.log("Creating form");
+  try {
+    const requestBody = request.body();
+    const body = await requestBody.value;
+    const user = request.user;
+    console.log(user);
+    //@ts-ignore
+    const form = await Form.createForm(window.db, user.account_id, body);
+    response.body = { success: true, form_id: form.form_id };
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const getForm = async (ctx: Context) => {

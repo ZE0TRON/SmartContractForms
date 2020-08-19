@@ -12,7 +12,7 @@ function FormsScreen() {
   useEffect(() => {
     const options = {
       method: "GET",
-      uri: "https://localhost:8000/form/list",
+      uri: SERVER_URL + "/form/list",
       json: true, // Automatically stringifies the body to JSON
       jar: true,
       withCredentials: true,

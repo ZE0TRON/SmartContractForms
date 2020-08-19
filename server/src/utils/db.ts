@@ -91,7 +91,8 @@ export const addIntegration = async (db: Client, integration: Integration) => {
     integration.contract.address,
     integration.contract.abi,
     integration.contract.method,
-    integration.form_url
+    integration.form_url,
+    integration.payment
   );
 
   return result.rows[0][0];

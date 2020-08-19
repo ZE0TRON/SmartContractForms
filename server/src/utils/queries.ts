@@ -15,7 +15,8 @@ export const CREATE_INTEGRATION_TABLE_QUERY = `
     contract_address varchar(42) not null,
     contract_abi text not null,
     contract_method varchar(20)  not null,
-    form_url varchar(100) not null
+    form_url varchar(100) not null,
+    payment varchar(30)
   );
 `;
 export const CREATE_MATCHING_TABLE_QUERY = `
@@ -90,8 +91,8 @@ export const CREATE_USER_QUERY = `
   returning user_id;
 `;
 export const CREATE_INTEGRATION_QUERY = `
-  insert into integrations (user_id,contract_address,contract_abi,contract_method,form_url)
-  values ($1, $2, $3, $4, $5)
+  insert into integrations (user_id,contract_address,contract_abi,contract_method,form_url,payment)
+  values ($1, $2, $3, $4, $5, $6)
   returning integration_id;
 `;
 export const CREATE_MATCHING_QUERY = `
