@@ -15,6 +15,7 @@ const getForm = async (url: string) => {
   formString = formString.replaceAll(/\\n/g, "");
   formString = formString.replaceAll("\\/", "/");
   formString = formString.replaceAll('\\"', '"');
+  formString = formString.replaceAll("\\t", " ");
   return formString;
 };
 const createPage = async (
