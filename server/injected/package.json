@@ -1,0 +1,25 @@
+{
+  "name": "injected",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@metamask/detect-provider": "^1.1.0",
+    "@types/bytebuffer": "^5.0.41",
+    "web3": "^1.2.11",
+    "web3-core": "^1.2.11",
+    "web3-eth-contract": "^1.2.11"
+  }
+}

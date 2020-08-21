@@ -125961,6 +125961,7 @@ var verifyTransaction = function (txHash) { return script_awaiter(void 0, void 0
                     console.log("verified");
                     clearInterval(verifyIntervalFunc);
                     verifyCounter = 0;
+                    document.querySelector(".submit-button").textContent = "Verified";
                     document.querySelector("form").submit();
                     return [2 /*return*/];
                 }
@@ -126049,11 +126050,20 @@ var submitClick = function (e) { return script_awaiter(void 0, void 0, void 0, f
                 options = {
                     gasPrices: src_default.a.utils.toWei("4.1", "Gwei"),
                 };
-                //@ts-expect-error
-                if (PAYMENT_FIELD && typeof PAYMENT_FIELD !== "undefined") {
+                try {
                     //@ts-expect-error
-                    options.value = src_default.a.utils.toWei(getPaymentAmount(), "ether");
+                    if (PAYMENT_FIELD && typeof PAYMENT_FIELD !== "undefined") {
+                        //@ts-expect-error
+                        options.value = src_default.a.utils.toWei(getPaymentAmount(), "ether");
+                    }
                 }
+                catch (err) {
+                    console.log(err);
+                }
+                //@ts-expect-error
+                document.querySelector(".submit-button").disable();
+                document.querySelector(".submit-button").textContent =
+                    "Waiting for verification";
                 return [4 /*yield*/, callMethod(contract, params, options)];
             case 2:
                 _a.sent();

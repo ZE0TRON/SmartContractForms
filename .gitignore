@@ -6,3 +6,5 @@
 *.key
 *.env
 *.pem
+dist
+node_modules
