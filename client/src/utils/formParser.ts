@@ -7,6 +7,7 @@ export async function getFormField(url: string): Promise<Array<FormField>> {
     return [];
   }
   const fields = parseForm(formPage);
+  console.log(fields);
   return fields;
 }
 
